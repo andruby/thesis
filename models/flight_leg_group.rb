@@ -4,12 +4,25 @@ class FlightLegGroup < ActiveRecord::Base
   belongs_to :aircraft_type
   
   def self.from_array(array)
-    l = FlightLeg.new
+    l = FlightLegGroup.new
     prefix, flight_nr, aircraft_ba_code, l.days_of_the_week, from, till, departure_iata, l.departure_time, arrival_iata, l.arrival_time = array
     l.flight_nr = prefix+flight_nr
     l.from = from.insert(-3,"20")
     l.till = till.insert(-3,"20")
     l.aircraft_type = AircraftType.find_or_create_by_ba_code(aircraft_ba_code)
+    l.departure_airport = Airport.find_or_create_by_iata_code(departure_iata)
+    l.arrival_airport = Airport.find_or_create_by_iata_code(arrival_iata)
+    return l
+  end
+  
+  # New version for anonymous data
+  # Flt Desg,Eff Date,Dis Date,Freq,Dept Arp,Dept Time,Arvl Arp,Arrv Time,Subfleet,Service Type
+  # SN 5129 ,1-sep-08,4-sep-08,12_4___,BRU,07:45,Dest14,09:00,SN  AR8,J
+  def self.from_anon_array(array)
+    l = FlightLegGroup.new
+    flight_nr, l.from, l.till, l.days_of_the_week, departure_iata, l.departure_time, arrival_iata, l.arrival_time, aircraft_ba_code, blank = array
+    l.flight_nr = flight_nr.gsub(' ','')
+    l.aircraft_type = AircraftType.find_or_create_by_ba_code(aircraft_ba_code.gsub('SN  ',''))
     l.departure_airport = Airport.find_or_create_by_iata_code(departure_iata)
     l.arrival_airport = Airport.find_or_create_by_iata_code(arrival_iata)
     return l
@@ -58,6 +71,6 @@ class FlightLegGroup < ActiveRecord::Base
   end
   
   def flight_legs(start_date=from,stop_date=till)
-    self.dates(start_date,stop_date).collect { |date| FlightLeg.from_flg(self,date) }
+    self.dates(start_date,stop_date).collect { |date| FlightLegGroup.from_flg(self,date) }
   end
 end
