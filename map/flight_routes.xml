@@ -1,0 +1,296 @@
+<!-- map file should be located in path (set in html) folder                                                                                             -->
+<!-- tl_long is longitute of top left corner, the default values is -180, tl_lat  is latitude  of top left corner, the default values is 90              -->
+<!-- br_long is longitute of top left corner, the default values is 180, br_lat  is latitude  of top left corner, the default values is -90              -->
+<!-- you should only set longitudes and latitudes if you want to calibrate your map and you know these values. Otherwise you can delete these attributes -->
+<!-- you can set default zoom level, zoom_x and zoom_y. To find out the numbers, you should turn developer mode on (in settings file), zoom map to required position, copy zoom info to clipboard (using right click menu) and paste it here -->
+
+<map map_file="world.swf" tl_long="-168.49" tl_lat="83.63" br_long="190.3" br_lat="-55.58" zoom="274%" zoom_x="-86.80%" zoom_y="-72.88%">
+  <!--areas are movie clips inside map file. areas can have child objects:movies, labels & lines -->
+  <!-- check online help for all possible area's attributes -->
+  <areas>
+    <area title="AFGHANISTAN" color="#87A5CF" mc_name="AF"></area>
+    <area title="ALAND ISLANDS" color="#87A5CF" mc_name="AX"></area>
+    <area title="ALBANIA" color="#87A5CF" mc_name="AL"></area>
+    <area title="ALGERIA" color="#87A5CF" mc_name="DZ"></area>
+    <area title="ANDORRA" color="#87A5CF" mc_name="AD"></area>
+    <area title="ANGOLA" color="#87A5CF" mc_name="AO"></area>
+    <area title="ANGUILLA" color="#87A5CF" mc_name="AI"></area>
+    <area title="ANTIGUA AND BARBUDA" color="#87A5CF" mc_name="AG"></area>
+    <area title="ARGENTINA" color="#87A5CF" mc_name="AR"></area>
+    <area title="ARMENIA" color="#87A5CF" mc_name="AM"></area>
+    <area title="ARUBA" color="#87A5CF" mc_name="AW"></area>
+    <area title="AUSTRALIA" color="#87A5CF" mc_name="AU"></area>
+    <area title="AUSTRIA" color="#87A5CF" mc_name="AT"></area>
+    <area title="AZERBAIJAN" color="#87A5CF" mc_name="AZ"></area>
+    <area title="BAHAMAS" color="#87A5CF" mc_name="BS"></area>
+    <area title="BAHRAIN" color="#87A5CF" mc_name="BH"></area>
+    <area title="BANGLADESH" color="#87A5CF" mc_name="BD"></area>
+    <area title="BARBADOS" color="#87A5CF" mc_name="BB"></area>
+    <area title="BELARUS" color="#87A5CF" mc_name="BY"></area>
+    <area title="BELGIUM" color="#87A5CF" mc_name="BE"></area>
+    <area title="BELIZE" color="#87A5CF" mc_name="BZ"></area>
+    <area title="BENIN" color="#87A5CF" mc_name="BJ"></area>
+    <area title="BERMUDA" color="#87A5CF" mc_name="BM"></area>
+    <area title="BHUTAN" color="#87A5CF" mc_name="BT"></area>
+    <area title="BOLIVIA" color="#87A5CF" mc_name="BO"></area>
+    <area title="BOSNIA AND HERZEGOVINA" color="#87A5CF" mc_name="BA"></area>
+    <area title="BOTSWANA" color="#87A5CF" mc_name="BW"></area>
+    <area title="BRAZIL" color="#87A5CF" mc_name="BR"></area>
+    <area title="BRUNEI DARUSSALAM" color="#87A5CF" mc_name="BN"></area>
+    <area title="BULGARIA" color="#87A5CF" mc_name="BG"></area>
+    <area title="BURKINA FASO" color="#87A5CF" mc_name="BF"></area>
+    <area title="BURUNDI" color="#87A5CF" mc_name="BI"></area>
+    <area title="CAMBODIA" color="#87A5CF" mc_name="KH"></area>
+    <area title="CAMEROON" color="#87A5CF" mc_name="CM"></area>
+    <area title="CANADA" color="#87A5CF" mc_name="CA"></area>
+    <area title="CAPE VERDE" color="#87A5CF" mc_name="CV"></area>
+    <area title="CENTRAL AFRICAN REPUBLIC" color="#87A5CF" mc_name="CF"></area>
+    <area title="CHAD" color="#87A5CF" mc_name="TD"></area>
+    <area title="CHILE" color="#87A5CF" mc_name="CL"></area>
+    <area title="CHINA" color="#87A5CF" mc_name="CN"></area>
+    <area title="COLOMBIA" color="#87A5CF" mc_name="CO"></area>
+    <area title="COMOROS" color="#87A5CF" mc_name="KM"></area>
+    <area title="REPUBLIC OF CONGO" color="#87A5CF" mc_name="CG"></area>
+    <area title="THE DEMOCRATIC REPUBLIC OF THE CONGO" color="#87A5CF" mc_name="CD"></area>
+    <area title="COSTA RICA" color="#87A5CF" mc_name="CR"></area>
+    <area title="C0TE D'IVOIRE" color="#87A5CF" mc_name="CI"></area>
+    <area title="CROATIA" color="#87A5CF" mc_name="HR"></area>
+    <area title="CUBA" color="#87A5CF" mc_name="CU"></area>
+    <area title="CYPRUS" color="#87A5CF" mc_name="CY"></area>
+    <area title="CZECH REPUBLIC" color="#87A5CF" mc_name="CZ"></area>
+    <area title="DENMARK" color="#87A5CF" mc_name="DK"></area>
+    <area title="DJIBOUTI" color="#87A5CF" mc_name="DJ"></area>
+    <area title="DOMINICA" color="#87A5CF" mc_name="DM"></area>
+    <area title="DOMINICAN REPUBLIC" color="#87A5CF" mc_name="DO"></area>
+    <area title="ECUADOR" color="#87A5CF" mc_name="EC"></area>
+    <area title="EGYPT" color="#87A5CF" mc_name="EG"></area>
+    <area title="EL SALVADOR" color="#87A5CF" mc_name="SV"></area>
+    <area title="EQUATORIAL GUINEA" color="#87A5CF" mc_name="GQ"></area>
+    <area title="ERITREA" color="#87A5CF" mc_name="ER"></area>
+    <area title="ESTONIA" color="#87A5CF" mc_name="EE"></area>
+    <area title="ETHIOPIA" color="#87A5CF" mc_name="ET"></area>
+    <area title="FAEROE ISLANDS" color="#87A5CF" mc_name="FO"></area>
+    <area title="FALKLAND ISLANDS" color="#87A5CF" mc_name="FK"></area>
+    <area title="FIJI" color="#87A5CF" mc_name="FJ"></area>
+    <area title="FINLAND" color="#87A5CF" mc_name="FI"></area>
+    <area title="FRANCE" color="#87A5CF" mc_name="FR"></area>
+    <area title="FRENCH GUIANA" color="#87A5CF" mc_name="GF"></area>
+    <area title="GABON" color="#87A5CF" mc_name="GA"></area>
+    <area title="GAMBIA, THE" color="#87A5CF" mc_name="GM"></area>
+    <area title="GEORGIA" color="#87A5CF" mc_name="GE"></area>
+    <area title="GERMANY" color="#87A5CF" mc_name="DE"></area>
+    <area title="GHANA" color="#87A5CF" mc_name="GH"></area>
+    <area title="GREECE" color="#87A5CF" mc_name="GR"></area>
+    <area title="GREENLAND" color="#87A5CF" mc_name="GL"></area>
+    <area title="GRENADA" color="#87A5CF" mc_name="GD"></area>
+    <area title="GUADELOUPE" color="#87A5CF" mc_name="GP"></area>
+    <area title="GUATEMALA" color="#87A5CF" mc_name="GT"></area>
+    <area title="GUINEA" color="#87A5CF" mc_name="GN"></area>
+    <area title="GUINEA-BISSAU" color="#87A5CF" mc_name="GW"></area>
+    <area title="GUYANA" color="#87A5CF" mc_name="GY"></area>
+    <area title="HAITI" color="#87A5CF" mc_name="HT"></area>
+    <area title="HONDURAS" color="#87A5CF" mc_name="HN"></area>
+    <area title="HONG KONG" color="#87A5CF" mc_name="HK"></area>
+    <area title="HUNGARY" color="#87A5CF" mc_name="HU"></area>
+    <area title="ICELAND" color="#87A5CF" mc_name="IS"></area>
+    <area title="INDIA" color="#87A5CF" mc_name="IN"></area>
+    <area title="INDONESIA" color="#87A5CF" mc_name="ID"></area>
+    <area title="IRAN" color="#87A5CF" mc_name="IR"></area>
+    <area title="IRAQ" color="#87A5CF" mc_name="IQ"></area>
+    <area title="IRELAND" color="#87A5CF" mc_name="IE"></area>
+    <area title="ISRAEL" color="#87A5CF" mc_name="IL"></area>
+    <area title="ITALY" color="#87A5CF" mc_name="IT"></area>
+    <area title="JAMAICA" color="#87A5CF" mc_name="JM"></area>
+    <area title="JAPAN" color="#87A5CF" mc_name="JP"></area>
+    <area title="JORDAN" color="#87A5CF" mc_name="JO"></area>
+    <area title="KAZAKHSTAN" color="#87A5CF" mc_name="KZ"></area>
+    <area title="KENYA" color="#87A5CF" mc_name="KE"></area>
+    <area title="NORTH KOREA" color="#87A5CF" mc_name="KP"></area>
+    <area title="SOUTH KOREA" color="#87A5CF" mc_name="KR"></area>
+    <area title="KUWAIT" color="#87A5CF" mc_name="KW"></area>
+    <area title="KYRGYZSTAN" color="#87A5CF" mc_name="KG"></area>
+    <area title="LAO PEOPLE'S DEMOCRATIC REPUBLIC" color="#87A5CF" mc_name="LA"></area>
+    <area title="LATVIA" color="#87A5CF" mc_name="LV"></area>
+    <area title="LEBANON" color="#87A5CF" mc_name="LB"></area>
+    <area title="LESOTHO" color="#87A5CF" mc_name="LS"></area>
+    <area title="LIBERIA" color="#87A5CF" mc_name="LR"></area>
+    <area title="LIBYA" color="#87A5CF" mc_name="LY"></area>
+    <area title="LIECHTENSTEIN" color="#87A5CF" mc_name="LI"></area>
+    <area title="LITHUANIA" color="#87A5CF" mc_name="LT"></area>
+    <area title="LUXEMBOURG" color="#87A5CF" mc_name="LU"></area>
+    <area title="MACEDONIA" color="#87A5CF" mc_name="MK"></area>
+    <area title="MADAGASCAR" color="#87A5CF" mc_name="MG"></area>
+    <area title="MALAWI" color="#87A5CF" mc_name="MW"></area>
+    <area title="MALAYSIA" color="#87A5CF" mc_name="MY"></area>
+    <area title="MALI" color="#87A5CF" mc_name="ML"></area>
+    <area title="MALTA" color="#87A5CF" mc_name="MT"></area>
+    <area title="MARTINIQUE" color="#87A5CF" mc_name="MQ"></area>
+    <area title="MAURITANIA" color="#87A5CF" mc_name="MR"></area>
+    <area title="MAURITIUS" color="#87A5CF" mc_name="MU"></area>
+    <area title="MEXICO" color="#87A5CF" mc_name="MX"></area>
+    <area title="MOLDOVA" color="#87A5CF" mc_name="MD"></area>
+    <area title="MONGOLIA" color="#87A5CF" mc_name="MN"></area>
+    <area title="MONTENEGRO" color="#87A5CF" mc_name="ME"></area>
+    <area title="MONTSERRAT" color="#87A5CF" mc_name="MS"></area>
+    <area title="MOROCCO" color="#87A5CF" mc_name="MA"></area>
+    <area title="MOZAMBIQUE" color="#87A5CF" mc_name="MZ"></area>
+    <area title="MYANMAR" color="#87A5CF" mc_name="MM"></area>
+    <area title="NAMIBIA" color="#87A5CF" mc_name="NA"></area>
+    <area title="NEPAL" color="#87A5CF" mc_name="NP"></area>
+    <area title="NETHERLANDS" color="#87A5CF" mc_name="NL"></area>
+    <area title="NEW CALEDONIA" color="#87A5CF" mc_name="NC"></area>
+    <area title="NEW ZEALAND" color="#87A5CF" mc_name="NZ"></area>
+    <area title="NICARAGUA" color="#87A5CF" mc_name="NI"></area>
+    <area title="NIGER" color="#87A5CF" mc_name="NE"></area>
+    <area title="NIGERIA" color="#87A5CF" mc_name="NG"></area>
+    <area title="NORWAY" color="#87A5CF" mc_name="NO"></area>
+    <area title="OMAN" color="#87A5CF" mc_name="OM"></area>
+    <area title="PAKISTAN" color="#87A5CF" mc_name="PK"></area>
+    <area title="PALAU" color="#87A5CF" mc_name="PW"></area>
+    <area title="PALESTINIAN TERRITORIES" color="#87A5CF" mc_name="PS"></area>
+    <area title="PANAMA" color="#87A5CF" mc_name="PA"></area>
+    <area title="PAPUA NEW GUINEA" color="#87A5CF" mc_name="PG"></area>
+    <area title="PARAGUAY" color="#87A5CF" mc_name="PY"></area>
+    <area title="PERU" color="#87A5CF" mc_name="PE"></area>
+    <area title="PHILIPPINES" color="#87A5CF" mc_name="PH"></area>
+    <area title="POLAND" color="#87A5CF" mc_name="PL"></area>
+    <area title="PORTUGAL" color="#87A5CF" mc_name="PT"></area>
+    <area title="PUERTO RICO" color="#87A5CF" mc_name="PR"></area>
+    <area title="QATAR" color="#87A5CF" mc_name="QA"></area>
+    <area title="REUNION" color="#87A5CF" mc_name="RE"></area>
+    <area title="ROMANIA" color="#87A5CF" mc_name="RO"></area>
+    <area title="RUSSIAN FEDERATION" color="#87A5CF" mc_name="RU"></area>
+    <area title="RWANDA" color="#87A5CF" mc_name="RW"></area>
+    <area title="SAINT KITTS AND NEVIS" color="#87A5CF" mc_name="KN"></area>
+    <area title="SAINT LUCIA" color="#87A5CF" mc_name="LC"></area>
+    <area title="SAMOA" color="#87A5CF" mc_name="WS"></area>
+    <area title="SAO TOME AND PRINCIPE" color="#87A5CF" mc_name="ST"></area>
+    <area title="SAUDI ARABIA" color="#87A5CF" mc_name="SA"></area>
+    <area title="SENEGAL" color="#87A5CF" mc_name="SN"></area>
+    <area title="SERBIA" color="#87A5CF" mc_name="RS"></area>
+    <area title="SIERRA LEONE" color="#87A5CF" mc_name="SL"></area>
+    <area title="SINGAPORE" color="#87A5CF" mc_name="SG"></area>
+    <area title="SLOVAKIA" color="#87A5CF" mc_name="SK"></area>
+    <area title="SLOVENIA" color="#87A5CF" mc_name="SI"></area>
+    <area title="SOLOMON ISLANDS" color="#87A5CF" mc_name="SB"></area>
+    <area title="SOMALIA" color="#87A5CF" mc_name="SO"></area>
+    <area title="SOUTH AFRICA" color="#87A5CF" mc_name="ZA"></area>
+    <area title="SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS" color="#87A5CF" mc_name="GS"></area>
+    <area title="SPAIN" color="#87A5CF" mc_name="ES"></area>
+    <area title="SRI LANKA" color="#87A5CF" mc_name="LK"></area>
+    <area title="SUDAN" color="#87A5CF" mc_name="SD"></area>
+    <area title="SURINAME" color="#87A5CF" mc_name="SR"></area>
+    <area title="SVALBARD AND JAN MAYEN" color="#87A5CF" mc_name="SJ"></area>
+    <area title="SWAZILAND" color="#87A5CF" mc_name="SZ"></area>
+    <area title="SWEDEN" color="#87A5CF" mc_name="SE"></area>
+    <area title="SWITZERLAND" color="#87A5CF" mc_name="CH"></area>
+    <area title="SYRIAN ARAB REPUBLIC" color="#87A5CF" mc_name="SY"></area>
+    <area title="TAIWAN" color="#87A5CF" mc_name="TW"></area>
+    <area title="TAJIKISTAN" color="#87A5CF" mc_name="TJ"></area>
+    <area title="TANZANIA" color="#87A5CF" mc_name="TZ"></area>
+    <area title="THAILAND" color="#87A5CF" mc_name="TH"></area>
+    <area title="TIMOR-LESTE" color="#87A5CF" mc_name="TL"></area>
+    <area title="TOGO" color="#87A5CF" mc_name="TG"></area>
+    <area title="TONGA" color="#87A5CF" mc_name="TO"></area>
+    <area title="TRINIDAD AND TOBAGO" color="#87A5CF" mc_name="TT"></area>
+    <area title="TUNISIA" color="#87A5CF" mc_name="TN"></area>
+    <area title="TURKEY" color="#87A5CF" mc_name="TR"></area>
+    <area title="TURKMENISTAN" color="#87A5CF" mc_name="TM"></area>
+    <area title="TURKS AND CAICOS ISLANDS" color="#87A5CF" mc_name="TC"></area>
+    <area title="UGANDA" color="#87A5CF" mc_name="UG"></area>
+    <area title="UKRAINE" color="#87A5CF" mc_name="UA"></area>
+    <area title="UNITED ARAB EMIRATES" color="#87A5CF" mc_name="AE"></area>
+    <area title="UNITED KINGDOM" color="#87A5CF" mc_name="GB"></area>
+    <area title="UNITED STATES" color="#87A5CF" mc_name="US"></area>
+    <area title="URUGUAY" color="#87A5CF" mc_name="UY"></area>
+    <area title="UZBEKISTAN" color="#87A5CF" mc_name="UZ"></area>
+    <area title="VANUATU" color="#87A5CF" mc_name="VU"></area>
+    <area title="VENEZUELA" color="#87A5CF" mc_name="VE"></area>
+    <area title="VIET NAM" color="#87A5CF" mc_name="VN"></area>
+    <area title="VIRGIN ISLANDS, BRITISH" color="#87A5CF" mc_name="VG"></area>
+    <area title="WESTERN SAHARA" color="#87A5CF" mc_name="EH"></area>
+    <area title="YEMEN" color="#87A5CF" mc_name="YE"></area>
+    <area title="ZAMBIA" color="#87A5CF" mc_name="ZM"></area>
+    <area title="ZIMBABWE" color="#87A5CF" mc_name="ZW"></area>
+    <area title="borders" mc_name="borders" color="#FFFFFF" balloon="false"></area>
+  </areas>
+ <!-- movies are movie clips loaded on top of a map. Movies can have child objects:movies, labels & lines -->
+ <!-- movies can be bounded to a map or to a stage. To bound to a map you should indicate longitude (long) and latitude (lat). To bound to the stage you should indicate x and y (in pixels or percents) -->
+ <!-- there are several build in movies, which you don't need to load. To use them, use one of the following names for "file" attribute: rectangle, border, circle, target -->
+ <!-- check online help for all possible area's attributes -->
+  <movies>
+  <movie  file="target" title="Brussels" lat='50.901389' long='4.484444' width="14" height="14" color="#132136" fixed_size="true"></movie>
+    <!-- START_CITIES -->
+		<movie color='8400720300' file='circle' title='Dakar (DKR)' lat='14.739708' long='-17.490225' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Banjul (BJL)' lat='13.337961' long='-16.652206' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Conakry (CKY)' lat='9.576889' long='-13.611961' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Freetown (FNA)' lat='8.616444' long='-13.195489' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Monrovia (ROB)' lat='6.233789' long='-10.362311' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Abidjan (ABJ)' lat='5.261386' long='-3.926294' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Douala (DLA)' lat='4.006081' long='9.719481' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Kinshasa (FIH)' lat='-4.38575' long='15.444569' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Yaoundé (NSI)' lat='3.722556' long='11.553269' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Luanda (LAD)' lat='-8.858375' long='13.231178' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Bujumbura (BJM)' lat='-3.324019' long='29.318519' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Nairobi (NBO)' lat='-1.319242' long='36.927775' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Kigali (KGL)' lat='-1.968628' long='30.13945' width='6' height='6' fixed_size='true'></movie>
+		<movie color='8400720300' file='circle' title='Entebbe/Kampala (EBB)' lat='0.042386' long='32.443503' width='6' height='6' fixed_size='true'></movie>
+		<movie color='3800BF0500' file='circle' title='Eskisehir (AOE)' lat='39.81' long='30.519444' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='København (CPH)' lat='55.617917' long='12.655972' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Fagernes (VDB)' lat='61.015556' long='9.288056' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Geneva (GVA)' lat='46.238064' long='6.10895' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Birmingham (BHX)' lat='52.453856' long='-1.748028' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Bristol (BRS)' lat='51.382669' long='-2.719089' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='London (LGW)' lat='51.148056' long='-0.190278' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Manchester (MAN)' lat='53.353744' long='-2.27495' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Newcastle (NCL)' lat='55.0375' long='-1.691667' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Oslo (OSL)' lat='60.193917' long='11.100361' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Stockholm (BMA)' lat='59.354372' long='17.94165' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Göteborg (GOT)' lat='57.662836' long='12.279819' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Helsinki (HEL)' lat='60.317222' long='24.963333' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Kraków (KRK)' lat='50.077731' long='19.784836' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Warsaw (WAW)' lat='52.16575' long='20.967122' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Berlin (TXL)' lat='52.56' long='13.288' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Frankfurt (FRA)' lat='50.026421' long='8.543125' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Hamburg (HAM)' lat='53.630389' long='9.988228' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='München (MUC)' lat='48.353783' long='11.786086' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Praha (PRG)' lat='50.100833' long='14.26' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Budapest (BUD)' lat='47.436933' long='19.255592' width='6' height='6' fixed_size='true'></movie>
+		<movie color='3800BF0500' file='circle' title='Moscow (DME)' lat='55.408786' long='37.906314' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Wien (VIE)' lat='48.110278' long='16.569721' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Bologna (BLQ)' lat='44.535444' long='11.288667' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Catania (CTA)' lat='37.466781' long='15.0664' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Firenze (FLR)' lat='43.809953' long='11.2051' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Milano (MXP)' lat='45.630606' long='8.728111' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Napoli (NAP)' lat='40.886033' long='14.290781' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Roma (FCO)' lat='41.804475' long='12.250797' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Torino (TRN)' lat='45.200761' long='7.649631' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Venezia (VCE)' lat='45.505278' long='12.351944' width='6' height='6' fixed_size='true'></movie>
+		<movie color='3800BF0500' file='circle' title='Athens (ATH)' lat='37.936358' long='23.944467' width='6' height='6' fixed_size='true'></movie>
+		<movie color='3800BF0500' file='circle' title='Tel Aviv (TLV)' lat='32.011389' long='34.886667' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Lyon (LYS)' lat='45.725556' long='5.081111' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Marseille Provence (MRS)' lat='43.436667' long='5.215' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Nice (NCE)' lat='43.665278' long='7.215' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Strasbourg (SXB)' lat='48.543611' long='7.637222' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Toulouse (TLS)' lat='43.635' long='1.367778' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Barcelona (BCN)' lat='41.297078' long='2.078463' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Bilbao (BIO)' lat='43.301097' long='-2.910608' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Madrid (MAD)' lat='40.493556' long='-3.566764' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Málaga (AGP)' lat='36.6749' long='-4.499106' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Palma de Mallorca (PMI)' lat='39.551675' long='2.738808' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Faro (FAO)' lat='37.014425' long='-7.965911' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Porto (OPO)' lat='41.248055' long='-8.681389' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Lisboa (LIS)' lat='38.781311' long='-9.135919' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Bacau (BCM)' lat='46.521946' long='26.910278' width='6' height='6' fixed_size='true'></movie>
+		<movie color='2000F20600' file='circle' title='Vilnius (VNO)' lat='54.637075' long='25.287803' width='6' height='6' fixed_size='true'></movie>
+<!-- STOP_CITIES -->
+  </movies>
+      
+  <lines>
+  <!-- START_LINES -->
+		<line lat='68.8562829488431,68.7347041552212,68.4939867161074,68.1388097984317,67.6757278247055,67.1127083727917,66.4586426787715,65.7228890103998,64.9148886412641,64.0438721235752,63.1186558407638,62.1475176790302,61.1381356460821,60.0975726583094,59.0322926255671,57.9481959052056,56.8506652391509,55.7446159533679,54.6345463185517,53.524585546474,52.4185380074461,51.3199230022069,50.2320099018701,49.1578487615606,48.1002966777509,47.0620402403065,46.0456144588945,45.0534185408052,44.0877288773252,43.1507095675487,42.2444207774811,41.3708252017695,40.5317928672112,39.7291044922072,38.9644535948079,38.2394475238668,37.5556075727524,36.9143683226596,36.3170763523281,35.7649884424221,35.2592693954729,34.8009895856724,34.3911223465124,34.0305412979291,33.7200177079097,33.4602179762131,33.2517013197585,33.0949177302392,32.9902062645836,32.9377937180449,32.9377937180449,32.9902062645836,33.0949177302392,33.2517013197585,33.4602179762131,33.7200177079097,34.0305412979291,34.3911223465124,34.8009895856724,35.2592693954729,35.7649884424221,36.3170763523281,36.9143683226596,37.5556075727524,38.2394475238668,38.9644535948079,39.7291044922072,40.5317928672112,41.3708252017695,42.2444207774811,43.1507095675487,44.0877288773251,45.0534185408052,46.0456144588946,47.0620402403066,48.1002966777509,49.1578487615606,50.2320099018701,51.3199230022069,52.4185380074461,53.524585546474,54.6345463185517,55.7446159533679,56.8506652391509,57.9481959052056,59.0322926255671,60.0975726583094,61.1381356460821,62.1475176790302,63.1186558407638,64.0438721235752,64.9148886412641,65.7228890103998,66.4586426787715,67.1127083727917,67.6757278247055,68.1388097984317,68.4939867161074,68.7347041552212,68.8562829488431' long='6.02395311407752,9.07609819475844,12.0494961142661,14.8975704026133,17.5816071202291,20.0721658141514,22.3493321269915,24.4020342154613,26.2267551510028,27.8259729784962,29.206590100935,30.378519854023,31.3535126144457,32.1442411522163,32.7636268707169,33.2243702445522,33.5386436340766,33.7179070198483,33.7728129988418,33.7131741238049,33.5479720250124,33.2853931607874,32.9328803598473,32.4971926188938,31.9844680625315,31.4002867361087,30.7497311467594,30.0374433280578,29.2676777850899,28.4443500597691,27.5710809004094,26.6512361681945,25.6879626972228,24.6842203662008,23.6428106539501,22.5664019483064,21.4575518660252,20.3187268248569,19.1523190912817,17.9606615105689,16.7460401111003,15.5107047629488,14.2568780617866,12.9867626032717,11.702546809893,10.4064094714385,9.10052316131807,7.78705669338003,6.46817678705897,5.146049112161,3.82283888783901,2.50071121294104,1.18183130661994,-0.131635161318077,-1.43752147143846,-2.73365880989304,-4.01787460327175,-5.28799006178664,-6.54181676294885,-7.77715211110027,-8.99177351056887,-10.1834310912817,-11.3498388248569,-12.4886638660252,-13.5975139483064,-14.6739226539501,-15.7153323662008,-16.7190746972228,-17.6823481681945,-18.6021929004094,-19.4754620597691,-20.2987897850899,-21.0685553280578,-21.7808431467594,-22.4313987361087,-23.0155800625315,-23.5283046188938,-23.9639923598473,-24.3165051607875,-24.5790840250124,-24.7442861238049,-24.8039249988418,-24.7490190198483,-24.5697556340766,-24.2554822445522,-23.794738870717,-23.1753531522163,-22.3846246144457,-21.409631854023,-20.237702100935,-18.8570849784962,-17.2578671510028,-15.4331462154613,-13.3804441269915,-11.1032778141513,-8.61271912022909,-5.92868240261326,-3.08060811426611,-0.107210194758432,2.94493488592252' width='1' alpha='80' curved='true' color='F20600'></line>
+		<line lat='84.9301397920735,84.0936615119687,82.7045137120422,81.0181034254806,79.1757002284922,77.2484092520012,75.2735128463345,73.2720976135759,71.2570827492902,69.2370115569436,67.2179489815538,65.2044886187773,63.2003165713771,61.2085425700544,59.2319027623936,57.2728885952973,55.3338314485238,53.4169598279296,51.5244389796574,49.6583988875041,47.8209543526722,46.0142195010082,44.2403182298343,42.5013915809854,40.7996026875411,39.1371397185228,37.5162170965659,35.9390751628107,34.4079783952875,32.9252122420985,31.4930786025635,30.1138899742731,28.7899622792127,27.5236063861177,26.3171183578844,25.172768471265,24.0927890803891,23.0793614249301,22.1346015168644,21.2605452753823,20.4591331159709,19.7321942350884,19.0814308640942,18.5084027929436,18.0145124834214,17.6009911013283,17.2688857954059,17.0190485367428,16.8521268055216,16.7685563725822,16.7685563725822,16.8521268055216,17.0190485367428,17.2688857954059,17.6009911013283,18.0145124834214,18.5084027929436,19.0814308640942,19.7321942350884,20.4591331159709,21.2605452753823,22.1346015168644,23.0793614249301,24.0927890803891,25.172768471265,26.3171183578844,27.5236063861177,28.7899622792127,30.1138899742732,31.4930786025635,32.9252122420986,34.4079783952875,35.9390751628107,37.5162170965659,39.1371397185228,40.7996026875411,42.5013915809854,44.2403182298343,46.0142195010082,47.8209543526722,49.6583988875041,51.5244389796574,53.4169598279296,55.3338314485238,57.2728885952973,59.2319027623936,61.2085425700544,63.2003165713771,65.2044886187773,67.2179489815539,69.2370115569436,71.2570827492902,73.2720976135759,75.2735128463345,77.2484092520012,79.1757002284922,81.0181034254806,82.7045137120422,84.0936615119687,84.9301397920735' long='15.9920733365115,35.3681754039179,48.2271332048172,56.134067650032,60.9765790847927,63.9531859682684,65.7515900861214,66.7709870695546,67.2522443022374,67.3469530700534,67.1543014334589,66.7414378763051,66.1551702084797,65.4289509245515,64.5871993322877,63.648063344824,62.6252360594792,61.5291821518103,60.3679855783618,59.1479482695785,57.874021448244,56.5501222067345,55.1793700231077,53.7642665220178,52.3068344249309,50.8087267739344,49.2713142441681,47.6957561212645,46.0830589605684,44.4341258396589,42.749798319003,41.0308926414022,39.2782312653556,37.4926704976535,35.6751247376054,33.8265876499463,31.9481504328444,30.0410172332625,28.1065176789689,26.1461164416065,24.1614197164511,22.1541785004862,20.1262885698781,18.0797870991564,16.0168459249696,13.9397615338518,11.8509419416343,9.75289072670887,7.64818857430999,5.53947277804931,3.4294152219507,1.32069942569001,-0.784002726708906,-2.88205394163427,-4.97087353385183,-7.04795792496965,-9.1108990991564,-11.1574005698782,-13.1852905004862,-15.1925317164512,-17.1772284416065,-19.1376296789689,-21.0721292332625,-22.9792624328444,-24.8576996499463,-26.7062367376054,-28.5237824976535,-30.3093432653556,-32.0620046414022,-33.780910319003,-35.465237839659,-37.1141709605684,-38.7268681212645,-40.3024262441681,-41.8398387739345,-43.3379464249309,-44.7953785220178,-46.2104820231077,-47.5812342067345,-48.905133448244,-50.1790602695785,-51.3990975783618,-52.5602941518103,-53.6563480594792,-54.679175344824,-55.6183113322877,-56.4600629245515,-57.1862822084798,-57.7725498763051,-58.1854134334589,-58.3780650700534,-58.2833563022374,-57.8020990695546,-56.7827020861214,-54.9842979682683,-52.0076910847926,-47.165179650032,-39.2582452048173,-26.3992874039178,-7.0231853365112' width='1' alpha='80' curved='true' color='BF0500'></line>
+		<line lat='53.5948907804245,53.363040579603,52.9039834853969,52.2265862310957,51.3431858280978,50.2686458278013,49.019375588208,47.6124379819316,46.0648226994585,44.3929136135004,42.6121419864217,40.736796284731,38.7799517404391,36.7534840015892,34.6681368844005,32.5336212761657,30.3587288748887,28.1514499201379,25.9190882042604,23.6683695862073,21.4055422009227,19.1364678113008,16.8667044965622,14.6015812722605,12.3462654100227,10.1058232501888,7.88527523091167,5.68964572648706,3.52400811564803,1.39352529832521,-0.696514347378351,-2.74066582447743,-4.73330171609207,-6.66859252862712,-8.54049427014624,-10.3427446319474,-12.0688693854552,-13.7122007841497,-15.2659098268388,-16.7230541399638,-18.0766429133177,-19.3197197193033,-20.4454631210108,-21.4473037233879,-22.3190547921766,-23.0550518734009,-23.6502951819855,-24.1005871423321,-24.4026566324247,-24.5542614517757,-24.5542614517757,-24.4026566324247,-24.1005871423321,-23.6502951819855,-23.0550518734009,-22.3190547921766,-21.4473037233879,-20.4454631210108,-19.3197197193033,-18.0766429133177,-16.7230541399638,-15.2659098268388,-13.7122007841497,-12.0688693854552,-10.3427446319474,-8.54049427014626,-6.66859252862713,-4.73330171609207,-2.74066582447742,-0.696514347378351,1.39352529832523,3.524008115648,5.68964572648706,7.88527523091168,10.1058232501888,12.3462654100227,14.6015812722605,16.8667044965622,19.1364678113008,21.4055422009227,23.6683695862073,25.9190882042604,28.1514499201379,30.3587288748887,32.5336212761657,34.6681368844005,36.7534840015892,38.7799517404391,40.736796284731,42.6121419864218,44.3929136135004,46.0648226994585,47.6124379819316,49.019375588208,50.2686458278013,51.3431858280978,52.2265862310957,52.9039834853969,53.363040579603,53.5948907804245' long='181.547679204107,175.703182407474,169.94352798152,164.318170062002,158.867210707993,153.619858514877,148.594310208019,143.798737272243,139.232938628227,134.890244605342,130.759363869093,126.825990954678,123.074098388556,119.486909631942,116.047588990293,112.739700709579,109.547490914521,106.456040036432,103.451324622468,100.520218541146,97.6504558281465,94.8305711538468,92.0498291169122,89.2981500722995,86.56603773336,83.8445121060938,81.1250502161634,78.3995364147643,75.6602236732883,72.8997071028766,70.1109108873325,67.2870898323204,64.4218467513379,61.5091668703238,58.543470274671,55.5196830761494,52.4333273706333,49.2806291214355,46.0586417837205,42.7653817636436,39.3999697218222,35.9627694123564,32.4555134350992,28.8814033295992,25.2451703133857,21.5530831630082,17.8128916839212,14.0336981394794,10.2257547917701,6.40019280245047,2.56869519754955,-1.25686679177005,-5.06481013947944,-8.8440036839212,-12.5841951630082,-16.2762823133857,-19.9125153295992,-23.4866254350992,-26.9938814123564,-30.4310817218223,-33.7964937636436,-37.0897537837206,-40.3117411214355,-43.4644393706333,-46.5507950761493,-49.574582274671,-52.5402788703238,-55.4529587513379,-58.3182018323204,-61.1420228873325,-63.9308191028767,-66.6913356732883,-69.4306484147643,-72.1561622161634,-74.8756241060938,-77.5971497333599,-80.3292620722995,-83.0809411169122,-85.8616831538469,-88.6815678281465,-91.551330541146,-94.4824366224682,-97.4871520364318,-100.578602914521,-103.770812709579,-107.078700990293,-110.518021631942,-114.105210388556,-117.857102954678,-121.790475869093,-125.921356605342,-130.264050628227,-134.829849272243,-139.625422208019,-144.650970514878,-149.898322707993,-155.349282062002,-160.97463998152,-166.734294407474,-172.578791204107' width='1' alpha='80' curved='true' color='720300'></line>
+<!-- STOP_LINES -->
+  </lines>
+</map>
