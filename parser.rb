@@ -22,7 +22,7 @@ def parse_flight_legs(txt_file)
   i=0
   File.open(txt_file) do |file|
     while(line = file.gets)
-      array = line.split(',')
+      array = line.split(';')
       leg = FlightLegGroup.from_anon_array(array)
       leg.save!
       puts "#{i+=1}. #{leg.departure_airport.iata_code} -> #{leg.arrival_airport.iata_code}"
