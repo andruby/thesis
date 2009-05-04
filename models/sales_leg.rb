@@ -7,8 +7,11 @@ class SalesLeg < ActiveRecord::Base
   
   def self.from_array(array)
     l = SalesLeg.new
-    blank, l.date, blank, destination, ports, l.flight_nr, l.capacity, blank  = array
-    l.flight_nr_date = "#{l.flight_nr}_#{l.date[0..1]}"
+    l.date = array[1]
+    destination = array[3]
+    ports = array[4]
+    l.flight_nr = array[5]
+    l.flight_nr_date = l.flight_nr + '_' + l.date.day.to_s
     l.destination = destination.scan(/\d+/).first
     ports = ports.split
     l.departure_station = ports.first

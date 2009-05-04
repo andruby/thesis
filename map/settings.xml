@@ -211,7 +211,7 @@
   </balloon>
 
   <export_as_image>                                           <!-- export_as_image feature works only on a web server -->
-    <file></file>                                             <!-- [] (filename) if you set filename here, context menu (then user right clicks on flash movie) "Export as image" will appear. This will allow user to export map as an image. Collected image data will be posted to this file name (use ammap/export.php or ammap/export.aspx) -->
+    <file>export.php</file>                                             <!-- [] (filename) if you set filename here, context menu (then user right clicks on flash movie) "Export as image" will appear. This will allow user to export map as an image. Collected image data will be posted to this file name (use ammap/export.php or ammap/export.aspx) -->
     <target></target>                                         <!-- [] (_blank, _top ...) target of a window in which export file must be called -->
     <x></x>                                                   <!-- [0] (Number) x position of "Collecting data" text -->
     <y></y>                                                   <!-- [] (Number) y position of "Collecting data" text. If not set, will be aligned to the bottom of flash movie -->

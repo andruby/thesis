@@ -1,10 +1,12 @@
 require 'config.rb'
 
+connect_to_db(:thesis_old)
+
 # aantal punten in de cirkel
 circle_resolution = 100
 
 # ranges voor het trekken van de cirkel [kms, kleur]
-ranges = [[2000,"F20600"],
+ranges = [[1700,"F20600"],
           [3800,"BF0500"],
           [8400,"720300"]]
 
