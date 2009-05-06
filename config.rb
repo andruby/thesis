@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'activerecord'
-require 'geokit'
-require 'geokit-rails/lib/geokit-rails.rb'
+# require 'geokit'
+# require 'geokit-rails/lib/geokit-rails.rb'
 
 # Loads all model files
 Dir[File.dirname(__FILE__) + '/models/*.rb'].each {|file| require file }

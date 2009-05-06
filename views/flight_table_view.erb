@@ -1,0 +1,11 @@
+<h1>Flight Table View</h1>
+<table border="1" cellspacing="0" cellpadding="0" width="700" style="border-collapse: collapse">
+  <% for aircraft_type in @aircraft_types %>
+    <% (aircraft_type.count || 0).times do |count| %>
+      <tr>
+        <th width="124"><%= aircraft_type.ba_code %> (<%= count %>)</th>
+        <td></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

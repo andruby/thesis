@@ -71,6 +71,6 @@ class FlightLegGroup < ActiveRecord::Base
   end
   
   def flight_legs(start_date=from,stop_date=till)
-    self.dates(start_date,stop_date).collect { |date| FlightLegGroup.from_flg(self,date) }
+    self.dates(start_date,stop_date).collect { |date| FlightLeg.from_flg(self,date) }
   end
 end

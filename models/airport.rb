@@ -4,9 +4,9 @@ class Airport < ActiveRecord::Base
   validates_uniqueness_of :iata_code
   # Stop getting additional data: tis fictieve data
   #before_create :get_aditional_data
-  acts_as_mappable :default_units => :kms, 
-                   :default_formula => :sphere, 
-                   :distance_field_name => :distance 
+  # acts_as_mappable :default_units => :kms, 
+  #                  :default_formula => :sphere, 
+  #                  :distance_field_name => :distance 
   
   def get_aditional_data
     require 'hpricot'
@@ -22,5 +22,26 @@ class Airport < ActiveRecord::Base
   def self.order_by_distance_from_bru
     bru = self.find_by_iata_code('BRU')
     self.find(:all,:origin => bru,:order => 'distance')
+  end
+  
+  def in_uit_balans(start_date,end_date)
+    in_count = 0 
+    self.flight_leg_groups_in.each { |flg| 
+      in_count += flg.dates(start_date,end_date).size
+    }
+    out_count = 0 
+    self.flight_leg_groups_out.each { |flg| 
+      out_count += flg.dates(start_date,end_date).size
+    }
+    diff = (in_count-out_count).abs
+    puts "(#{diff}) #{self.iata_code}: IN=#{in_count} OUT=#{out_count}" unless in_count == out_count
+    #raise "Count klopt niet voor #{self.iata_code}: IN=#{in_count} OUT=#{out_count}" unless in_count == out_count
+    return diff
+  end
+  
+  def planes
+    counters = {}
+    self.flight_leg_groups_in.collect(&:aircraft_type).each { |a| counters[a.ba_code] = (counters[a.ba_code] || 0) + 1 }
+    p counters
   end
 end
