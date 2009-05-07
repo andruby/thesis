@@ -9,14 +9,15 @@ require 'yaml'
 yaml_file = 'data/flights.yml'
 
 # kosten parameters
-fixed_cost_100 = 6000 / 100.0
-var_cost_100 = 80 / 100.0
+fixed_cost_100 = 3000 / 100.0
+var_cost_100 = 60 / 100.0
+price = {"Short"=>100,"Medium"=>200}
 
 #--------------#
 
 class GeenInlegException < Exception; end;
 
-if File.exist?(yaml_file)
+if false && File.exist?(yaml_file)
   puts "loading from Yaml"
   flights = File.open( yaml_file ) { |yf| YAML::load( yf ) }
 else
@@ -80,10 +81,10 @@ flights.each do |flight|
   [flight.demand_1,flight.demand_2].each do |demand|
     if flight.original_aircraft.passenger_capacity >= demand
       # de vraag wordt voldaan
-      omzet +=  flight.price * demand
+      omzet += price[flight.haul] * demand
     else
       # er is spill
-      omzet +=  flight.price * flight.original_aircraft.passenger_capacity
+      omzet += price[flight.haul] * flight.original_aircraft.passenger_capacity
       spill[flight.haul] += demand - flight.original_aircraft.passenger_capacity
     end
   end
