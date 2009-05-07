@@ -61,8 +61,8 @@ class FlightLegGroup < ActiveRecord::Base
   # return all dates this flight leg flies, between start_date and stop_date
   def dates(start_date=from,stop_date=till)
     # change start_date if from is later
-    start_date = from if start_date < from 
-    stop_date = from if stop_date > till
+    start_date = [from.to_date,start_date.to_date].max
+    stop_date = [till.to_date,stop_date.to_date].min 
     dates = []
     start_date.upto(stop_date) do |date|
       dates << date if fly_on_date?(date)

@@ -5,10 +5,12 @@ div {
   padding: 0;
 }
 .flight { 
-  background-color: #35498b; 
+  background-color: #35498b;
+  opacity: 0.5;
+  color: white;
   text-align: center;
   float: left; 
-  height: 10px; 
+  height: 11px; 
   margin-top: 2px; 
   margin-bottom: 1px; 
   -moz-border-radius: 4px;
@@ -21,44 +23,63 @@ div {
   float: left; width: 60px; text-align: center;
   margin-bottom: 4px;
 }
-td {
+td.schedule {
   background: url('/schedule_bg.png') repeat-x top left; 
   border-right: 1px solid black; 
   border-left: 1px solid black;
 }
 body, th, td, div { 
   font-family: "Century Gothic";
-  font-size:10px;
-  margin-top: 2px;
+  font-size:9px;
+  margin-top: 0px;
   margin-bottom: 0px;
 }
+th {
+  font-size:10px;
+}
 table {
-  clear: both;
+  clear: left;
   border-collapse: collapse; 
   border: 1px solid black;
   margin-bottom: 4px;
 }
+#winstoverzicht {
+  float:right;
+  margin-right: 10px;
+  margin-top: 20px;
+}
 </style>
 <div style='width: 2130px'>&nbsp;
-<div class="date" style="margin-left: 22px;">18/09</div>
-<% (19..25).to_a.each do |day|%>
-  <div class="date" style="margin-left: 228px;"><%= day %>/09</div>
-<% end %>
+  <div class="date" style="margin-left: 22px;">14/09</div>
+  <% (15..21).to_a.each do |day|%>
+    <div class="date" style="margin-left: 228px;"><%= day %>/09</div>
+  <% end %>
 </div>
+
+<div id="winstoverzicht">
+  <table border="0" cellspacing="0" cellpadding="3">
+    <tr><th colspan="2"><%= Time.now %></th></tr>
+    <tr><td>Omzet:</td><td></td></tr>
+    <tr><td>Vaste Kosten:</td><td></td></tr>
+    <tr><td>Variabele Kosten:</td><td></td></tr>
+    <tr><td>Winst:</td><td></td></tr>
+  </table>
+</div>
+
 <% @assignment.fleets.each do |ba_code,fleet| %>
 <table border="0" cellspacing="0" cellpadding="0" width="2130">
     <% count = 0%>
     <% fleet.schedules.each do |schedule| %>
       <tr>
         <th width="50px"><%= (count+=1) == 1 ? ba_code : count %></th>
-        <td><%= schedule.to_divs(Time.mktime(2008,9,18)) %></td>
+        <td class="schedule"><%= schedule.to_divs(Time.mktime(2008,9,14)) %></td>
       </tr>
     <% end %>
 </table>
 <% end %>
 <div style='width: 2130px'>&nbsp;
-<div class="date" style="margin-left: 22px;">18/09</div>
-<% (19..25).to_a.each do |day|%>
-  <div class="date" style="margin-left: 228px;"><%= day %>/09</div>
-<% end %>
+  <div class="date" style="margin-left: 22px;">14/09</div>
+  <% (15..21).to_a.each do |day|%>
+    <div class="date" style="margin-left: 228px;"><%= day %>/09</div>
+  <% end %>
 </div>

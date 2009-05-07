@@ -35,7 +35,11 @@ class FlightLeg
   def demand_at_days_before(number_of_days)
     date = departure_time.to_date - number_of_days.days
     flight_nr_date = "#{flight_nr.gsub('SN','SN ')}_#{departure_time.day}"
-    return SalesLeg.find_by_flight_nr_date(flight_nr_date).sales_ticks.find_by_date(date).seats_sold
+    until sales_leg = SalesLeg.find_by_flight_nr_date(flight_nr_date) do
+      puts "WARNING: NoSalesLegFound: Flight_nr_date #{flight_nr_date}" unless sales_leg
+      flight_nr_date = flight_nr_date.next
+    end
+    return sales_leg.sales_ticks.find_by_date(date).seats_sold
   end
   
   # Ticket price

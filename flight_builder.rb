@@ -10,8 +10,11 @@ yaml_file = 'data/flights.yml'
 
 # kosten parameters
 fixed_cost_100 = 3000 / 100.0
-var_cost_100 = 60 / 100.0
+var_cost_100 = 50 / 100.0
 price = {"Short"=>100,"Medium"=>200}
+
+# rotatietijd
+min_rotatie_tijd = 30.minutes
 
 #--------------#
 
@@ -21,10 +24,8 @@ if false && File.exist?(yaml_file)
   puts "loading from Yaml"
   flights = File.open( yaml_file ) { |yf| YAML::load( yf ) }
 else
-  START_OF_PERIOD = Date.parse("18SEP2008")
+  START_OF_PERIOD = Date.parse("14SEP2008")
   END_OF_PERIOD  = START_OF_PERIOD  + 6.days
-
-  min_rotatie_tijd = 30
 
   puts "#{START_OF_PERIOD} tot #{END_OF_PERIOD}"
 
@@ -42,7 +43,7 @@ else
   out_legs.each do |out_leg|
     begin
       # inkomende leg zoeken die van zelfde vliegveld vertrekt en na de aankomsttijd + rotatie tijd opstijgt.
-      in_leg = in_legs.detect {|in_leg| in_leg.departure_airport == out_leg.arrival_airport && in_leg.departure_time > out_leg.arrival_time + min_rotatie_tijd }
+      in_leg = in_legs.detect {|in_leg| in_leg.departure_airport == out_leg.arrival_airport && (out_leg.arrival_time + min_rotatie_tijd) <= in_leg.departure_time }
       # gevonden leg uit beschikbaren weghalen
       in_legs -= [in_leg]
       puts "#{in_legs.size} in legs size"
@@ -52,7 +53,7 @@ else
       # flight vullen
       flights << Flight.new(id,out_leg.original_aircraft,out_leg.flight_nr,in_leg.flight_nr,out_leg.haul,
                               out_leg.departure_time,in_leg.arrival_time,total_flight_time,out_leg.demand,in_leg.demand,out_leg.price)
-      p flights.last
+      #p flights.last
       id+=1
     rescue GeenInlegException => e
       puts "Geen inkomende leg gevonden voor deze uitgaande leg:"
@@ -63,7 +64,7 @@ else
   puts "Errors: #{errors}, total flights: #{flights.size}"
 
   puts "Save to yaml file"
-
+  
   File.open(yaml_file,'w') do |file|
     YAML.dump(flights,file)
   end
