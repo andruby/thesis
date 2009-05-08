@@ -6,9 +6,11 @@ get '/' do
   # save file voor vluchten
   yaml_file = 'data/flights.yml'
   yaml_2_file = 'data/assignments/flights.yml'
+  to_cplex = 'data/flight_for_cplex.yml'
+  from_cplex= 'data/flight_from_cplex.yml'
 
   # load flights
-  @flights = load_from_yaml(yaml_2_file)
+  @flights = load_from_yaml(from_cplex)
   
   # assign flights to aircraft
   @assignment = Assignment.new(@flights)
