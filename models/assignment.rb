@@ -1,7 +1,8 @@
 # The assignment class holds an unsorted list of flights
 # And sorted fleet classes
 class Assignment
-  attr_accessor :fleets, :flights, :available_craft, :params
+  attr_accessor :fleets, :flights, :available_craft
+  cattr_accessor :params
   
   # Calculation parameters
   DEFAULT_PARAMS = {
@@ -13,8 +14,12 @@ class Assignment
   }
   
   def set_params(params)
-    @params ||= {}
-    @params.merge!(params)
+    @@params ||= {}
+    @@params.merge!(params)
+  end
+  
+  def flight_with_id(id)
+    @flights.find {|f| f.id == id }
   end
   
   class NoRoomForFlight < Exception; end;
@@ -34,7 +39,7 @@ class Assignment
   
   def fit_flight(flight,surpress_errors=false)
     ba_code = flight.aircraft.ba_code
-    fit = @fleets[ba_code].fit_flight(flight,@params[:rotation])
+    fit = @fleets[ba_code].fit_flight(flight,@@params[:rotation])
     raise NoRoomForFlight, "No room for flight #{flight}" if fit == false && surpress_errors != true
     return true
   end
@@ -51,7 +56,7 @@ class Assignment
     # zet alle stats op 0
     omzet, fixed_cost, var_cost = 0, 0, 0
     # om makkelijker toegankelijk te maken hieronder
-    price = {"Short" => @params[:price_short], "Medium" => @params[:price_medium]}
+    price = {"Short" => @@params[:price_short], "Medium" => @@params[:price_medium]}
     spill = {"Short" => 0, "Medium" => 0}
 
     @flights.each do |f|
@@ -66,12 +71,12 @@ class Assignment
         end
       end
       # Kosten toevoegen
-      fixed_cost += 2 * f.aircraft.fixed_cost * @params[:fixed_cost_100]
-      var_cost += (f.flight_time/60) * @params[:var_cost_100] * f.aircraft.var_cost
+      fixed_cost += 2 * f.aircraft.fixed_cost * @@params[:fixed_cost_100]
+      var_cost += (f.flight_time/60) * @@params[:var_cost_100] * f.aircraft.var_cost
     end
 
     winst = omzet - fixed_cost - var_cost
-    return {:winst => winst,:omzet => omzet,:fixed_cost => fixed_cost,:var_cost => var_cost,:spill => spill,:params => @params}
+    return {:winst => winst,:omzet => omzet,:fixed_cost => fixed_cost,:var_cost => var_cost,:spill => spill,:params => @@params}
   end
 end
 
@@ -88,15 +93,15 @@ class Assignment
     
     def clear_schedules!
       @schedules = []
-      @size.times { @schedules << Schedule.new }      
+      @size.times { |nr| @schedules << Schedule.new(nr) }      
     end
     
-    def fits?(flight,rotation=Assignment::DEFAULT_PARAMS[:rotation])
+    def fits?(flight,rotation=Assignment::params[:rotation])
       @schedules.any? { |schedule| schedule.fits?(flight,rotation) }
     end
     
     # try to fit the flight in a schedule, will return true if it fits, false if it doesn't 
-    def fit_flight(flight,rotation=Assignment::DEFAULT_PARAMS[:rotation])
+    def fit_flight(flight,rotation=Assignment::params[:rotation])
       @schedules.detect { |schedule| schedule.fit_flight(flight,rotation) } != nil
     end # end method
   end # end Fleet
@@ -107,11 +112,26 @@ class Assignment
     # The individual schedule of a plane
     # Includes all the scheduled flights
     class Schedule
-      attr_accessor :flights
+      attr_accessor :flights, :number
       
-      def fit_flight(flight,rotation)
+      def initialize(number)
+        @number = number
+      end
+      
+      # add flight without checking
+      def add_flight(flight)
+        @flights << flight
+        # remember in which schedule the flight is located
+        flight.schedule_location = self.number
+      end
+      
+      def remove_flight(flight)
+        @flights.delete(flight)
+      end
+      
+      def fit_flight(flight,rotation=Assignment::params[:rotation])
         if fits?(flight,rotation)
-          @flights << flight
+          add_flight(flight)
           return true
         else
           return false
@@ -119,7 +139,7 @@ class Assignment
       end
       
       # check of er nog plaats is voor deze flight
-      def fits?(flight,rotation)
+      def fits?(flight,rotation=Assignment::params[:rotation])
         (@flights ||= []).empty? || @flights.all? {|f| ((f.arrival_time + rotation) < flight.departure_time) || ((flight.arrival_time + rotation) < f.departure_time) }
       end
       

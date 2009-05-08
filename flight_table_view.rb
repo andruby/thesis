@@ -12,7 +12,7 @@ get '/' do
   
   # assign flights to aircraft
   @assignment = Assignment.new(@flights)
-  @assignment.schedule!(true)
+  @assignment.schedule!
   @results = @assignment.results
   #p @assignment.fleets['AR1'].schedules.first.flights.collect{|f| [f.departure_time,f.arrival_time]}
     
