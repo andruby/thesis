@@ -1,62 +1,77 @@
 # The assignment class holds an unsorted list of flights
 # And sorted fleet classes
 class Assignment
-  attr_accessor :fleets, :flights
+  attr_accessor :fleets, :flights, :available_craft, :params
+  
+  # Calculation parameters
+  DEFAULT_PARAMS = {
+    :rotation => 30.minutes,
+    :fixed_cost_100 => 21,
+    :var_cost_100 => 0.56,
+    :price_short => 100,
+    :price_medium => 200
+  }
+  
+  def set_params(params)
+    @params ||= {}
+    @params.merge!(params)
+  end
   
   class NoRoomForFlight < Exception; end;
   
   def initialize(flights,available_craft=nil)
     # set available craft to all craft if it is null
-    available_craft = AircraftType.find(:all, :conditions => ["count > 0"], :order => "id") unless available_craft
+    @available_craft = (available_craft || AircraftType.find(:all, :conditions => ["count > 0"], :order => "id"))
     @flights = flights
     @fleets = ActiveSupport::OrderedHash.new
-    available_craft.each do |craft|
+    @available_craft.each do |craft|
       @fleets[craft.ba_code] = Fleet.new(craft.ba_code,craft.count) unless craft.count < 1
     end
+    
+    # set default parameters
+    self.set_params(DEFAULT_PARAMS)
   end
   
-  def fit_flight(flight,rotation)
+  def fit_flight(flight,surpress_errors=false)
     ba_code = flight.aircraft.ba_code
-    reply = @fleets[ba_code].fit_flight(flight,rotation)
-    raise NoRoomForFlight, "No room for flight #{flight}" if reply.nil? 
+    fit = @fleets[ba_code].fit_flight(flight,@params[:rotation])
+    raise NoRoomForFlight, "No room for flight #{flight}" if fit == false && surpress_errors != true
+    return true
   end
   
-  def schedule!(rotation=30.minutes)
+  def schedule!(surpress_errors=false)
     # clear previous schedules
     @fleets.each_value { |fleet| fleet.clear_schedules! }
     # reschedule
-    @flights.each { |flight| self.fit_flight(flight,rotation) }  
+    @flights.each { |flight| self.fit_flight(flight,surpress_errors) }  
   end
   
   # bereken de omzet,kosten en winst
-  def results(fixed_cost_100=21,var_cost_100=0.56,price_short_haul=100,price_medium_haul=200)
-    # save parameters
-    params = {:fixed_cost_100 => fixed_cost_100,:var_cost_100 => var_cost_100,
-              :price_short_haul => price_short_haul,:price_medium_haul=>price_medium_haul}
+  def results
     # zet alle stats op 0
     omzet, fixed_cost, var_cost = 0, 0, 0
     # om makkelijker toegankelijk te maken hieronder
-    price = {"Short" => price_short_haul, "Medium" => price_medium_haul}
+    price = {"Short" => @params[:price_short], "Medium" => @params[:price_medium]}
     spill = {"Short" => 0, "Medium" => 0}
 
-    @flights.each do |flight|
-      [flight.demand_1,flight.demand_2].each do |demand|
-        if flight.capacity >= demand
+    @flights.each do |f|
+      [f.demand_1,f.demand_2].each do |demand|
+        if f.capacity >= demand
           # de vraag wordt voldaan
-          omzet += price[flight.haul] * demand
+          omzet += price[f.haul] * demand
         else
           # er is spill
-          omzet += price[flight.haul] * flight.capacity
-          spill[flight.haul] += demand - flight.capacity
+          omzet += price[f.haul] * f.capacity
+          spill[f.haul] += demand - f.capacity
         end
       end
       # Kosten toevoegen
-      fixed_cost += 2 * flight.aircraft.fixed_cost * fixed_cost_100
-      var_cost += (flight.flight_time/60) * var_cost_100 * flight.aircraft.var_cost
+      fixed_cost += 2 * f.aircraft.fixed_cost * @params[:fixed_cost_100]
+      var_cost += (f.flight_time/60) * @params[:var_cost_100] * f.aircraft.var_cost
     end
 
     winst = omzet - fixed_cost - var_cost
-    return {:winst => winst,:omzet => omzet,:fixed_cost => fixed_cost,:var_cost => var_cost,:spill => spill,:params => params}
+    return {:winst => winst,:omzet => omzet,:fixed_cost => fixed_cost,:var_cost => var_cost,:spill => spill,:params => @params}
   end
 end
 
@@ -76,9 +91,13 @@ class Assignment
       @size.times { @schedules << Schedule.new }      
     end
     
-    # try to fit the flight in a schedule, will return nil if there is no room
-    def fit_flight(flight,rotation)
-      @schedules.detect { |schedule| schedule.fit_flight(flight,rotation) }
+    def fits?(flight,rotation=Assignment::DEFAULT_PARAMS[:rotation])
+      @schedules.any? { |schedule| schedule.fits?(flight,rotation) }
+    end
+    
+    # try to fit the flight in a schedule, will return true if it fits, false if it doesn't 
+    def fit_flight(flight,rotation=Assignment::DEFAULT_PARAMS[:rotation])
+      @schedules.detect { |schedule| schedule.fit_flight(flight,rotation) } != nil
     end # end method
   end # end Fleet
 end # end Assignment
@@ -91,7 +110,7 @@ class Assignment
       attr_accessor :flights
       
       def fit_flight(flight,rotation)
-        if (@flights ||= []).empty? || fits?(flight,rotation)
+        if fits?(flight,rotation)
           @flights << flight
           return true
         else
@@ -101,7 +120,7 @@ class Assignment
       
       # check of er nog plaats is voor deze flight
       def fits?(flight,rotation)
-        @flights.all? {|f| ((f.arrival_time + rotation) < flight.departure_time) || ((flight.arrival_time + rotation) < f.departure_time) }
+        (@flights ||= []).empty? || @flights.all? {|f| ((f.arrival_time + rotation) < flight.departure_time) || ((flight.arrival_time + rotation) < f.departure_time) }
       end
       
       def to_divs(starting_date)

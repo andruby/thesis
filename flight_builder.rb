@@ -52,7 +52,7 @@ else
       total_flight_time = (out_leg.arrival_time - out_leg.departure_time) + (in_leg.arrival_time - in_leg.departure_time)
       # flight vullen
       flights << Flight.new(id,out_leg.original_aircraft,out_leg.flight_nr,in_leg.flight_nr,out_leg.haul,
-                              out_leg.departure_time,in_leg.arrival_time,total_flight_time,out_leg.demand,in_leg.demand,out_leg.price)
+                              out_leg.departure_time,in_leg.arrival_time,total_flight_time,out_leg.demand,in_leg.demand)
       #p flights.last
       id+=1
     rescue GeenInlegException => e
