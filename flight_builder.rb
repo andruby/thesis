@@ -1,17 +1,17 @@
 require 'config'
-require 'yaml'
 
 ################
 # Configuratie #
 ################
 
 # save file voor vluchten
-yaml_file = 'data/flights.yml'
+yaml_file = 'data/flights_1_9.yml'
 
-# kosten parameters
-fixed_cost_100 = 3000 / 100.0
-var_cost_100 = 50 / 100.0
-price = {"Short"=>100,"Medium"=>200}
+# kosten parameters (staat nu in Assignment.results)
+# fixed_cost_100 = 3000 / 100.0
+# var_cost_100 = 50 / 100.0
+# price_short = 100
+# price_medium = 200
 
 # rotatietijd
 min_rotatie_tijd = 30.minutes
@@ -20,9 +20,9 @@ min_rotatie_tijd = 30.minutes
 
 class GeenInlegException < Exception; end;
 
-if false && File.exist?(yaml_file)
+if File.exist?(yaml_file)
   puts "loading from Yaml"
-  flights = File.open( yaml_file ) { |yf| YAML::load( yf ) }
+  flights = load_from_yaml(yaml_file)
 else
   START_OF_PERIOD = Date.parse("14SEP2008")
   END_OF_PERIOD  = START_OF_PERIOD  + 6.days
@@ -65,35 +65,14 @@ else
 
   puts "Save to yaml file"
   
-  File.open(yaml_file,'w') do |file|
-    YAML.dump(flights,file)
-  end
+  write_to_yaml(flights,yaml_file)
 end
 
 
 # Winst berekening
 puts "calculating original objective function:"
-omzet = 0
-fixed_cost = 0
-var_cost = 0
-spill = {"Short" => 0, "Medium" => 0}
+assignment = Assignment.new(flights)
+results = assignment.results()
 
-flights.each do |flight|
-  [flight.demand_1,flight.demand_2].each do |demand|
-    if flight.original_aircraft.passenger_capacity >= demand
-      # de vraag wordt voldaan
-      omzet += price[flight.haul] * demand
-    else
-      # er is spill
-      omzet += price[flight.haul] * flight.original_aircraft.passenger_capacity
-      spill[flight.haul] += demand - flight.original_aircraft.passenger_capacity
-    end
-  end
-  # Kosten toevoegen
-  fixed_cost += 2 * flight.original_aircraft.fixed_cost * fixed_cost_100
-  var_cost += (flight.flight_time/60) * var_cost_100 * flight.original_aircraft.var_cost
-end
-
-winst = omzet - fixed_cost - var_cost
-puts "R: #{omzet}\tFC: #{fixed_cost.round}\tVC: #{var_cost.round}\t Winst: #{winst.round}"
-puts "spill: " + spill.inspect
+puts "R: #{results[:omzet]}\tFC: #{results[:fixed_cost].round}\tVC: #{results[:var_cost].round}\t Winst: #{results[:winst].round}"
+puts "spill: " + results[:spill].inspect

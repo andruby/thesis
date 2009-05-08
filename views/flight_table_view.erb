@@ -24,17 +24,17 @@ div {
   margin-bottom: 4px;
 }
 td.schedule {
-  background: url('/schedule_bg.png') repeat-x top left; 
+  background: url('schedule_bg.png') repeat-x top left; 
   border-right: 1px solid black; 
   border-left: 1px solid black;
 }
-body, th, td, div { 
-  font-family: "Century Gothic";
+body, .schedule td {
   font-size:9px;
+  font-family: "Century Gothic";
   margin-top: 0px;
   margin-bottom: 0px;
 }
-th {
+.schedule th {
   font-size:10px;
 }
 table {
@@ -47,6 +47,12 @@ table {
   float:right;
   margin-right: 10px;
   margin-top: 20px;
+  font-size: 12px;
+}
+td.hr {
+  border-bottom: 1px solid black;
+  height: 5px;
+  margin-bottom: 5px;
 }
 </style>
 <div style='width: 2130px'>&nbsp;
@@ -59,15 +65,44 @@ table {
 <div id="winstoverzicht">
   <table border="0" cellspacing="0" cellpadding="3">
     <tr><th colspan="2"><%= Time.now %></th></tr>
-    <tr><td>Omzet:</td><td></td></tr>
-    <tr><td>Vaste Kosten:</td><td></td></tr>
-    <tr><td>Variabele Kosten:</td><td></td></tr>
-    <tr><td>Winst:</td><td></td></tr>
+    <tr><td colspan="2" class="hr"></td></tr>
+    <tr>
+      <td>Omzet</td>
+      <td align="right"><%= d_format @results[:omzet] %></td>
+    </tr>
+    <tr>
+      <td>Vaste kosten</td>
+      <td align="right"><%= d_format @results[:fixed_cost] %></td>
+    </tr>
+    <tr>
+      <td>Var kosten</td>
+      <td align="right"><%= d_format @results[:var_cost] %></td>
+    </tr>
+    <tr>
+      <td>Winst</td>
+      <td align="right"><%= d_format @results[:winst] %></td>
+    </tr>
+    <tr><td colspan="2" class="hr"></td></tr>
+    <tr>
+      <td>Short Spill</td>
+      <td align="right"><%= d_format @results[:spill]["Short"] %></td>
+    </tr>
+    <tr>
+      <td>Medium Spill</td>
+      <td align="right"><%= d_format @results[:spill]["Medium"] %></td>
+    </tr>
+    <tr><td colspan="2" class="hr"></td></tr>
+    <% @results[:params].each do |key, value| %> 
+      <tr>
+        <td><%= key %></td>
+        <td align="right"><%= value %></td>
+      </tr>
+    <% end %>   
   </table>
 </div>
 
 <% @assignment.fleets.each do |ba_code,fleet| %>
-<table border="0" cellspacing="0" cellpadding="0" width="2130">
+  <table class="schedule" border="0" cellspacing="0" cellpadding="0" width="2130">
     <% count = 0%>
     <% fleet.schedules.each do |schedule| %>
       <tr>
@@ -75,7 +110,7 @@ table {
         <td class="schedule"><%= schedule.to_divs(Time.mktime(2008,9,14)) %></td>
       </tr>
     <% end %>
-</table>
+  </table>
 <% end %>
 <div style='width: 2130px'>&nbsp;
   <div class="date" style="margin-left: 22px;">14/09</div>

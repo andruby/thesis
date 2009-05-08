@@ -5,7 +5,9 @@ class Assignment
   
   class NoRoomForFlight < Exception; end;
   
-  def initialize(flights,available_craft)
+  def initialize(flights,available_craft=nil)
+    # set available craft to all craft if it is null
+    available_craft = AircraftType.find(:all, :conditions => ["count > 0"], :order => "id") unless available_craft
     @flights = flights
     @fleets = ActiveSupport::OrderedHash.new
     available_craft.each do |craft|
@@ -19,7 +21,7 @@ class Assignment
     raise NoRoomForFlight, "No room for flight #{flight}" if reply.nil? 
   end
   
-  def schedule!(rotation)
+  def schedule!(rotation=30.minutes)
     # clear previous schedules
     @fleets.each_value { |fleet| fleet.clear_schedules! }
     # reschedule
@@ -27,10 +29,13 @@ class Assignment
   end
   
   # bereken de omzet,kosten en winst
-  def result(fixed_cost_100,var_cost_100,price_short_haul,price_medium_haul)
-    omzet = 0
-    fixed_cost = 0
-    var_cost = 0
+  def results(fixed_cost_100=21,var_cost_100=0.56,price_short_haul=100,price_medium_haul=200)
+    # save parameters
+    params = {:fixed_cost_100 => fixed_cost_100,:var_cost_100 => var_cost_100,
+              :price_short_haul => price_short_haul,:price_medium_haul=>price_medium_haul}
+    # zet alle stats op 0
+    omzet, fixed_cost, var_cost = 0, 0, 0
+    # om makkelijker toegankelijk te maken hieronder
     price = {"Short" => price_short_haul, "Medium" => price_medium_haul}
     spill = {"Short" => 0, "Medium" => 0}
 
@@ -51,7 +56,7 @@ class Assignment
     end
 
     winst = omzet - fixed_cost - var_cost
-    return [winst,omzet,fixed_cost,var_cost,spill["Short"],spill["Medium"]]
+    return {:winst => winst,:omzet => omzet,:fixed_cost => fixed_cost,:var_cost => var_cost,:spill => spill,:params => params}
   end
 end
 
@@ -71,15 +76,9 @@ class Assignment
       @size.times { @schedules << Schedule.new }      
     end
     
+    # try to fit the flight in a schedule, will return nil if there is no room
     def fit_flight(flight,rotation)
-      reply = @schedules.detect { |schedule| schedule.fit_flight(flight,rotation) }
-      if reply.nil?
-        puts "Add a new schedule for fleet #{flight.aircraft.ba_code}"
-        @schedules << Schedule.new
-        return @schedules.last.fit_flight(flight,rotation)
-      else
-        return true
-      end # end if
+      @schedules.detect { |schedule| schedule.fit_flight(flight,rotation) }
     end # end method
   end # end Fleet
 end # end Assignment
