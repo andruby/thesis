@@ -23,15 +23,19 @@ print(''done'');
 LANGUAGE plr;
 
 -- Function for scatter graphing with R
-CREATE OR REPLACE FUNCTION r_scatter(title text, sql text) RETURNS text AS 
-'
-str <- pg.spi.exec (sql);
-pdf(''/tmp/scatter_plot.pdf'');
-plot(str,main=title,cex=0.3, pch=20,col=rgb(255,0,0,2,maxColorValue=255),ylim=c(0,100));
+CREATE OR REPLACE FUNCTION r_scatter(title text, sql text)
+  RETURNS text AS
+$BODY$
+data <- pg.spi.exec (sql);
+pdf('/tmp/scatter_plot.pdf');
+plot(data,main=title,cex=0.3, 
+	pch=20,col=rgb(255,0,0,2,maxColorValue=255),ylim=c(0,100));
+regressie <- lm(data);
+abline(regressie);
 dev.off();
-print(''done'');
-' 
-LANGUAGE plr;
+print('done');
+$BODY$
+  LANGUAGE 'plr' VOLATILE;
 
 -- Scatter with hexbins
 CREATE OR REPLACE FUNCTION r_hexbin(title text, sql text) RETURNS text AS 

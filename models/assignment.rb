@@ -26,7 +26,7 @@ class Assignment
   
   def initialize(flights,available_craft=nil)
     # set available craft to all craft if it is null
-    @available_craft = (available_craft || AircraftType.find(:all, :conditions => ["count > 0"], :order => "id"))
+    @available_craft = (available_craft || AircraftType.find(:all, :conditions => ["count > 0"], :order => "id DESC"))
     @flights = flights
     @fleets = ActiveSupport::OrderedHash.new
     @available_craft.each do |craft|

@@ -10,7 +10,7 @@ get '/' do
   from_cplex= 'data/flight_from_cplex.yml'
 
   # load flights
-  @flights = load_from_yaml(from_cplex)
+  @flights = load_from_yaml(yaml_file)
   
   # assign flights to aircraft
   @assignment = Assignment.new(@flights)
