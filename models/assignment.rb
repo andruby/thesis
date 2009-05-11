@@ -37,6 +37,17 @@ class Assignment
     self.set_params(DEFAULT_PARAMS)
   end
   
+  # find all flights with spill and sort them by spill
+  def flights_with_spill
+    @flights.select {|f| f.spill > 0 }.collect { |f| [f.spill,f] }.sort_by(&:first).reverse
+  end
+  
+  # shortcut method for easy access to the schedule where a flight is currently scheduled
+  def schedule_for(flight)
+    @fleets[flight.aircraft.ba_code].schedules[flight.schedule_location]
+  end
+  
+  # fit a flight in the first  schedule where it fits
   def fit_flight(flight,surpress_errors=false)
     ba_code = flight.aircraft.ba_code
     fit = @fleets[ba_code].fit_flight(flight,@@params[:rotation])
