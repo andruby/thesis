@@ -22,11 +22,12 @@ class Assignment
     return (swap_fits?(flight_1,flight_2) && swap_fits?(flight_2,flight_1))
   end
 
+  # winst in kostenreductie als gevolg van de swap
   def swap_profits(flight_1,flight_2)
     aircraft_1 = flight_1.aircraft
     aircraft_2 = flight_2.aircraft
-    delta_1 = flight_1.profit(aircraft_2) - flight_1.profit(aircraft_1)
-    delta_2 = flight_2.profit(aircraft_1) - flight_2.profit(aircraft_2)
+    delta_1 = flight_1.cost(aircraft_1) - flight_1.cost(aircraft_2) 
+    delta_2 = flight_2.cost(aircraft_2) - flight_2.cost(aircraft_1)
     return (delta_1 + delta_2)
   end
   
@@ -53,7 +54,7 @@ class Assignment
   def swaps_for_flight(flight_1)
     possible_swaps = []
     @flights.each do |flight_2|
-      if (profits = swap_profits(flight_1,flight_2)) > 1) && swap_valid?(flight_1,flight_2)
+      if ((profits = swap_profits(flight_1,flight_2)) > 1) && swap_valid?(flight_1,flight_2)
         possible_swaps << [profits,flight_2]
       end
     end
@@ -106,7 +107,7 @@ Benchmark.bm(12) do |bench|
     end
   end
   bench.report("WriteYaml:") do
-    write_to_yaml(@pass_results,'data/assignments/progress_4.yml')
-    write_to_yaml(@assignment.flights,'data/assignments/flights_4.yml')
+    write_to_yaml(@pass_results,'data/assignments/progress_with_spill.yml')
+    write_to_yaml(@assignment.flights,'data/assignments/flights_with_spill.yml')
   end
 end

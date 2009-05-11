@@ -36,20 +36,18 @@ class Flight < Struct.new(:id, :original_aircraft, :flight_nr_1, :flight_nr_2, :
     haul == "Medium" ? Assignment::params[:price_medium] : Assignment::params[:price_short]
   end
   
-  # profit
-  def profit(aircraft_type=self.aircraft)
-    winst = 0
+  # cost of assigning given aircraft to this flight
+  def cost(aircraft_type=self.aircraft)
+    cost = 0
     [demand_1,demand_2].each do |demand|
-      if aircraft_type.passenger_capacity >= demand
-        # de vraag wordt voldaan
-        winst += price * demand
-      else
-        winst += price * aircraft_type.passenger_capacity
+      if demand >= aircraft_type.passenger_capacity
+        # er is spill
+        cost += price * (demand - aircraft_type.passenger_capacity)
       end
     end
     # Kosten aftrekken
-    winst -= 2 * aircraft_type.fixed_cost * Assignment::params[:fixed_cost_100]
-    winst -= (flight_time/60) * Assignment::params[:var_cost_100] * aircraft_type.var_cost
-    return winst
+    cost += 2 * aircraft_type.fixed_cost * Assignment::params[:fixed_cost_100]
+    cost += (flight_time/60) * Assignment::params[:var_cost_100] * aircraft_type.var_cost
+    return cost
   end
 end

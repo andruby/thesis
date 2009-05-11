@@ -65,20 +65,18 @@ class Assignment
   # bereken de omzet,kosten en winst
   def results
     # zet alle stats op 0
-    omzet, fixed_cost, var_cost = 0, 0, 0
+    spill_cost, fixed_cost, var_cost = 0, 0, 0
     # om makkelijker toegankelijk te maken hieronder
     price = {"Short" => @@params[:price_short], "Medium" => @@params[:price_medium]}
-    spill = {"Short" => 0, "Medium" => 0}
+    total_spill = {"Short" => 0, "Medium" => 0}
 
     @flights.each do |f|
       [f.demand_1,f.demand_2].each do |demand|
-        if f.capacity >= demand
-          # de vraag wordt voldaan
-          omzet += price[f.haul] * demand
-        else
+        if demand >= f.capacity
           # er is spill
-          omzet += price[f.haul] * f.capacity
-          spill[f.haul] += demand - f.capacity
+          spill = demand - f.capacity
+          total_spill[f.haul] += spill
+          spill_cost += price[f.haul] * spill
         end
       end
       # Kosten toevoegen
@@ -86,8 +84,8 @@ class Assignment
       var_cost += (f.flight_time/60) * @@params[:var_cost_100] * f.aircraft.var_cost
     end
 
-    winst = omzet - fixed_cost - var_cost
-    return {:winst => winst,:omzet => omzet,:fixed_cost => fixed_cost,:var_cost => var_cost,:spill => spill,:params => @@params}
+    total_cost = fixed_cost + var_cost + spill_cost
+    return {:total_cost => total_cost,:spill_cost => spill_cost,:fixed_cost => fixed_cost,:var_cost => var_cost,:spill => total_spill,:params => @@params}
   end
 end
 
