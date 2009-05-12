@@ -1,0 +1,51 @@
+require 'config'
+
+################
+# Configuratie #
+################
+
+# Load default parameters
+AssignmentParameters.from_ilog('default')
+
+# flights initialiseren
+session_name = 'week_14_20'
+start_date = Date.parse("14SEP2008")
+end_date = start_date + 6.days
+flights = Flights.new(session_name,start_date,end_date)
+
+################
+  
+puts "#{flights.start_date} tot #{flights.end_date}"  
+
+bru = Airport.find_by_iata_code('BRU')
+out_legs = bru.flight_leg_groups_out.collect { |flg| flg.flight_legs(flights.start_date,flights.end_date) }.flatten.sort_by(&:departure_time)
+in_legs = bru.flight_leg_groups_in.collect { |flg| flg.flight_legs(flights.start_date,flights.end_date) }.flatten.sort_by(&:departure_time)
+
+puts "#{out_legs.size} uitgaande legs"
+puts "#{in_legs.size} inkomende legs"
+
+id = 0
+errors = 0
+
+out_legs.each do |out_leg|
+  begin
+    # inkomende leg zoeken die van zelfde vliegveld vertrekt en na de aankomsttijd + rotatie tijd opstijgt.
+    in_leg = in_legs.detect {|in_leg| in_leg.departure_airport == out_leg.arrival_airport && 
+                                      (out_leg.arrival_time + AssignmentParameters.rotation_time_external) <= in_leg.departure_time && 
+                                      in_leg.arrival_time.to_date <= flights.end_date }
+    if in_leg
+      in_legs -= [in_leg]
+
+      # flight time berekenen
+      total_flight_time = (out_leg.arrival_time - out_leg.departure_time) + (in_leg.arrival_time - in_leg.departure_time)
+      # flight vullen
+      flights << Flight.new(id,out_leg.original_aircraft,out_leg.flight_nr,in_leg.flight_nr,out_leg.haul,
+                              out_leg.departure_time,in_leg.arrival_time,total_flight_time,out_leg.demand,in_leg.demand)
+      id+=1
+    end
+  end
+end
+
+puts "total flights: #{flights.size}"
+puts "Save to ilog file"
+flights.to_ilog

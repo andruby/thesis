@@ -1,22 +1,7 @@
 # The assignment class holds an unsorted list of flights
 # And sorted fleet classes
 class Assignment
-  attr_accessor :fleets, :flights, :available_craft
-  cattr_accessor :params
-  
-  # Calculation parameters
-  DEFAULT_PARAMS = {
-    :rotation => 30.minutes,
-    :fixed_cost_100 => 21,
-    :var_cost_100 => 0.56,
-    :price_short => 100,
-    :price_medium => 200
-  }
-  
-  def set_params(params)
-    @@params ||= {}
-    @@params.merge!(params)
-  end
+  attr_accessor :fleets, :flights, :available_craft  
   
   def flight_with_id(id)
     @flights.find {|f| f.id == id }
@@ -32,9 +17,6 @@ class Assignment
     @available_craft.each do |craft|
       @fleets[craft.ba_code] = Fleet.new(craft.ba_code,craft.count) unless craft.count < 1
     end
-    
-    # set default parameters
-    self.set_params(DEFAULT_PARAMS)
   end
   
   # find all flights with spill and sort them by spill
@@ -50,7 +32,7 @@ class Assignment
   # fit a flight in the first  schedule where it fits
   def fit_flight(flight,surpress_errors=false)
     ba_code = flight.aircraft.ba_code
-    fit = @fleets[ba_code].fit_flight(flight,@@params[:rotation])
+    fit = @fleets[ba_code].fit_flight(flight,AssignmentParameters.rotation_time_bru)
     raise NoRoomForFlight, "No room for flight #{flight}" if fit == false && surpress_errors != true
     return true
   end
@@ -67,25 +49,25 @@ class Assignment
     # zet alle stats op 0
     spill_cost, fixed_cost, var_cost = 0, 0, 0
     # om makkelijker toegankelijk te maken hieronder
-    price = {"Short" => @@params[:price_short], "Medium" => @@params[:price_medium]}
+    price = {"Short" => AssignmentParameters.price_short, "Medium" => AssignmentParameters.price_medium}
     total_spill = {"Short" => 0, "Medium" => 0}
 
     @flights.each do |f|
-      [f.demand_1,f.demand_2].each do |demand|
-        if demand >= f.capacity
+      [f.pax_1,f.pax_2].each do |pax|
+        if pax >= f.capacity
           # er is spill
-          spill = demand - f.capacity
+          spill = pax - f.capacity
           total_spill[f.haul] += spill
           spill_cost += price[f.haul] * spill
         end
       end
       # Kosten toevoegen
-      fixed_cost += 2 * f.aircraft.fixed_cost * @@params[:fixed_cost_100]
-      var_cost += (f.flight_time/60) * @@params[:var_cost_100] * f.aircraft.var_cost
+      fixed_cost += 2 * (f.aircraft.fixed_cost/100.0) * AssignmentParameters.fixed_cost_100
+      var_cost += (f.flight_time/60) * AssignmentParameters.var_cost_100 * (f.aircraft.var_cost/100.0)
     end
 
     total_cost = fixed_cost + var_cost + spill_cost
-    return {:total_cost => total_cost,:spill_cost => spill_cost,:fixed_cost => fixed_cost,:var_cost => var_cost,:spill => total_spill,:params => @@params}
+    return {:total_cost => total_cost,:spill_cost => spill_cost,:fixed_cost => fixed_cost,:var_cost => var_cost,:spill => total_spill,:params => AssignmentParameters}
   end
 end
 
@@ -105,12 +87,12 @@ class Assignment
       @size.times { |nr| @schedules << Schedule.new(nr) }      
     end
     
-    def fits?(flight,rotation=Assignment::params[:rotation])
+    def fits?(flight,rotation = AssignmentParameters.rotation_time_bru)
       @schedules.any? { |schedule| schedule.fits?(flight,rotation) }
     end
     
     # try to fit the flight in a schedule, will return true if it fits, false if it doesn't 
-    def fit_flight(flight,rotation=Assignment::params[:rotation])
+    def fit_flight(flight,rotation = AssignmentParameters.rotation_time_bru)
       @schedules.detect { |schedule| schedule.fit_flight(flight,rotation) } != nil
     end # end method
   end # end Fleet
@@ -138,7 +120,7 @@ class Assignment
         @flights.delete(flight)
       end
       
-      def fit_flight(flight,rotation=Assignment::params[:rotation])
+      def fit_flight(flight,rotation = AssignmentParameters.rotation_time_bru)
         if fits?(flight,rotation)
           add_flight(flight)
           return true
@@ -148,7 +130,7 @@ class Assignment
       end
       
       # check of er nog plaats is voor deze flight
-      def fits?(flight,rotation=Assignment::params[:rotation])
+      def fits?(flight,rotation = AssignmentParameters.rotation_time_bru)
         (@flights ||= []).empty? || @flights.all? {|f| ((f.arrival_time + rotation) < flight.departure_time) || ((flight.arrival_time + rotation) < f.departure_time) }
       end
       

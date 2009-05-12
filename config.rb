@@ -5,9 +5,6 @@ require 'yaml'
 # require 'geokit'
 # require 'geokit-rails/lib/geokit-rails.rb'
 
-# Loads all model files
-Dir[File.dirname(__FILE__) + '/models/*.rb'].each {|file| require file }
-
 def connect_to_db(db='thesis')
   ActiveRecord::Base.establish_connection(
      :adapter  => "postgresql",
@@ -30,3 +27,9 @@ end
 def write_to_yaml(data,yaml_file)
   File.open(yaml_file,'w') { |yf| YAML.dump(data,yf) }
 end
+
+# Loads all model files
+Dir[File.dirname(__FILE__) + '/models/*.rb'].each {|file| require file }
+
+# Initialize default parameters
+AssignmentParameters.from_ilog
