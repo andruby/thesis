@@ -19,9 +19,9 @@ class Flights < Array
       file.puts "* start_date = #{@start_date};"
       file.puts "* stop_date = #{@end_date};"
       file.puts "*/"
-      file.puts "flightLegs = {"
+      file.puts "flights = {"
       self.each_with_index {|f,idx| file.puts f.to_ilog(idx,start_date.at_midnight) }
-      file.puts "}"
+      file.puts "};"
     end
   end
   
