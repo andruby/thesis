@@ -1,7 +1,7 @@
 # The assignment class holds an unsorted list of flights
 # And sorted fleet classes
 class Assignment
-  attr_accessor :fleets, :flights, :available_craft  
+  attr_accessor :fleets, :flights, :available_craft
   
   def flight_with_id(id)
     @flights.find {|f| f.id == id }
@@ -49,7 +49,7 @@ class Assignment
     # zet alle stats op 0
     spill_cost, fixed_cost, var_cost = 0, 0, 0
     # om makkelijker toegankelijk te maken hieronder
-    price = {"Short" => AssignmentParameters.price_short, "Medium" => AssignmentParameters.price_medium}
+    spill_price = {"Short" => AssignmentParameters.spill_short, "Medium" => AssignmentParameters.spill_medium}
     total_spill = {"Short" => 0, "Medium" => 0}
 
     @flights.each do |f|
@@ -58,7 +58,7 @@ class Assignment
           # er is spill
           spill = pax - f.capacity
           total_spill[f.haul] += spill
-          spill_cost += price[f.haul] * spill
+          spill_cost += spill_price[f.haul] * spill
         end
       end
       # Kosten toevoegen
@@ -67,7 +67,7 @@ class Assignment
     end
 
     total_cost = fixed_cost + var_cost + spill_cost
-    return {:total_cost => total_cost,:spill_cost => spill_cost,:fixed_cost => fixed_cost,:var_cost => var_cost,:spill => total_spill,:params => AssignmentParameters}
+    return {:total_cost => total_cost,:spill_cost => spill_cost,:fixed_cost => fixed_cost,:var_cost => var_cost,:spill => total_spill,:params => AssignmentParameters.all}
   end
 end
 
@@ -131,7 +131,7 @@ class Assignment
       
       # check of er nog plaats is voor deze flight
       def fits?(flight,rotation = AssignmentParameters.rotation_time_bru)
-        (@flights ||= []).empty? || @flights.all? {|f| ((f.arrival_time + rotation) < flight.departure_time) || ((flight.arrival_time + rotation) < f.departure_time) }
+        (@flights ||= []).empty? || @flights.all? {|f| ((f.arrival_time + rotation) <= flight.departure_time) || ((flight.arrival_time + rotation) < f.departure_time) }
       end
       
       def to_divs(starting_date)

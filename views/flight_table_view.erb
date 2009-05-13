@@ -67,8 +67,8 @@ td.hr {
     <tr><th colspan="2"><%= Time.now %></th></tr>
     <tr><td colspan="2" class="hr"></td></tr>
     <tr>
-      <td>Omzet</td>
-      <td align="right"><%= d_format @results[:omzet] %></td>
+      <td>Spill kosten</td>
+      <td align="right"><%= d_format @results[:spill_cost] %></td>
     </tr>
     <tr>
       <td>Vaste kosten</td>
@@ -79,8 +79,8 @@ td.hr {
       <td align="right"><%= d_format @results[:var_cost] %></td>
     </tr>
     <tr>
-      <td>Winst</td>
-      <td align="right"><%= d_format @results[:winst] %></td>
+      <td>Totale kosten</td>
+      <td align="right"><%= d_format @results[:total_cost] %></td>
     </tr>
     <tr><td colspan="2" class="hr"></td></tr>
     <tr>
@@ -92,7 +92,8 @@ td.hr {
       <td align="right"><%= d_format @results[:spill]["Medium"] %></td>
     </tr>
     <tr><td colspan="2" class="hr"></td></tr>
-    <% @results[:params].each do |key, value| %> 
+    <% AssignmentParameters.all.each do |key,value| %> 
+		<% var_name = key.to_s.gsub('@@')%>
       <tr>
         <td><%= key %></td>
         <td align="right"><%= value %></td>

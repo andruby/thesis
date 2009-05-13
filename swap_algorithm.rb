@@ -1,6 +1,8 @@
 require 'benchmark'
 require 'config'
 
+session_name = 'week_14_20'
+
 # All the extra methods required
 # to run the swapping algorithm
 class Assignment
@@ -85,7 +87,7 @@ end
 def do_a_pass(assignment)
   start_time = Time.now
   swap_count = assignment.full_swap_pass
-  @pass_results << {:pass => @pass_counter+=1,:swap_count => swap_count,:time_ran => start_time - Time.now,:results => assignment.results}
+  @pass_results << {:pass => @pass_counter+=1,:swap_count => swap_count,:time_ran => Time.now - start_time,:results => assignment.results}
 end
 
 Benchmark.bm(12) do |bench|
@@ -93,7 +95,7 @@ Benchmark.bm(12) do |bench|
     require 'config'
   end
   bench.report("Loading:") do
-    @assignment = Assignment.new(load_from_yaml('data/flights_1_9.yml'))
+    @assignment = Assignment.new(load_from_yaml("data/assignments/#{session_name}_flights.yml"))
   end
   bench.report("Schedule:") do
     @assignment.schedule!
@@ -101,13 +103,15 @@ Benchmark.bm(12) do |bench|
     @flight_2 = @assignment.flight_with_id(186)
     @pass_results << {:pass => 'original',:results => @assignment.results}
   end
-  5.times do |x|
+  4.times do |x|
     bench.report("Pass #{x}:\n") do
       do_a_pass(@assignment)
     end
   end
   bench.report("WriteYaml:") do
-    write_to_yaml(@pass_results,'data/assignments/progress_with_spill.yml')
-    write_to_yaml(@assignment.flights,'data/assignments/flights_with_spill.yml')
+    puts "results"
+    p @pass_results
+    write_to_yaml(@assignment.flights,'data/assignments/flights_swapped_1420.yml')    
+    write_to_yaml(@pass_results,'data/assignments/progress_1420.yml')
   end
 end

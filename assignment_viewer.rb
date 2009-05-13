@@ -4,13 +4,12 @@ require 'config'
 
 get '/' do
   # save file voor vluchten
-  yaml_file = 'data/flights.yml'
-  yaml_2_file = 'data/assignments/flights.yml'
-  to_cplex = 'data/flight_for_cplex.yml'
-  from_cplex= 'data/flight_from_cplex.yml'
+  session_name = 'week_14_20'
+  yaml_file = "data/assignments/#{session_name}_assigned.yml"
+  yaml_file_2 = "data/assignments/#{session_name}_flights.yml"
 
   # load flights
-  @flights = load_from_yaml(yaml_file)
+  @flights = load_from_yaml(yaml_file_2)
   
   # assign flights to aircraft
   @assignment = Assignment.new(@flights)

@@ -48,7 +48,7 @@ class Flight < Struct.new(:id,:original_aircraft, :flight_nr_1, :flight_nr_2, :h
   
   # prijs van een ticket
   def price
-    haul == "Medium" ? AssignmentParameters.price_medium : AssignmentParameters.price_short
+    haul == "Medium" ? AssignmentParameters.spill_medium : AssignmentParameters.spill_short
   end
   
   # cost of assigning given aircraft to this flight

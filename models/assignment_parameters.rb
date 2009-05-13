@@ -34,4 +34,10 @@ class AssignmentParameters
     @@rotation_time_bru = @@rotation_time_bru.minutes
     @@rotation_time_external = @@rotation_time_external.minutes
   end
+  
+  def self.all
+    returning = {}
+    class_variables.each {|cv| returning[cv.to_s.gsub('@@','')] = class_variable_get(cv) }
+    returning
+  end
 end

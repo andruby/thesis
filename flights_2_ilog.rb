@@ -13,6 +13,9 @@ start_date = Date.parse("14SEP2008")
 end_date = start_date + 6.days
 flights = Flights.new(session_name,start_date,end_date)
 
+# also save as yaml
+yaml_file = ("data/assignments/#{session_name}_flights.yml")
+
 ################
   
 puts "#{flights.start_date} tot #{flights.end_date}"  
@@ -39,7 +42,7 @@ out_legs.each do |out_leg|
       # flight time berekenen
       total_flight_time = (out_leg.arrival_time - out_leg.departure_time) + (in_leg.arrival_time - in_leg.departure_time)
       # flight vullen
-      flights << Flight.new(id,out_leg.original_aircraft,out_leg.flight_nr,in_leg.flight_nr,out_leg.haul,
+      flights[id] = Flight.new(id,out_leg.original_aircraft,out_leg.flight_nr,in_leg.flight_nr,out_leg.haul,
                               out_leg.departure_time,in_leg.arrival_time,total_flight_time,out_leg.demand,in_leg.demand)
       id+=1
     end
@@ -49,3 +52,5 @@ end
 puts "total flights: #{flights.size}"
 puts "Save to ilog file"
 flights.to_ilog
+puts "Save to yaml file"
+write_to_yaml(flights,yaml_file)
