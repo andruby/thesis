@@ -3,13 +3,18 @@ require 'sinatra'
 require 'config'
 
 get '/' do
+  # load different parameters
+  AssignmentParameters.from_ilog('lower_spill_cost')
+  
   # save file voor vluchten
   session_name = 'week_14_20'
-  yaml_file = "data/assignments/#{session_name}_assigned.yml"
-  yaml_file_2 = "data/assignments/#{session_name}_flights.yml"
+  cplexed = "data/assignments/#{session_name}_assigned.yml"
+  cplexed_2 = "data/assignments/#{session_name}_assigned_2.yml"
+  original = "data/assignments/#{session_name}_flights.yml"
+  swapped = "data/assignments/flights_swapped_1420.yml"
 
   # load flights
-  @flights = load_from_yaml(yaml_file_2)
+  @flights = load_from_yaml(original)
   
   # assign flights to aircraft
   @assignment = Assignment.new(@flights)
