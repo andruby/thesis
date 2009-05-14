@@ -45,42 +45,26 @@ class MonteCarloGroup
   end
 end
 
-# average
+# Functies toevoegen aan Array
 class Array 
+  # bereken het gemiddelde
   def avg
-    item_count = 0
-    total = 0
-    self.each {|x| item_count+=1; total+=x}
-    return total/item_count.to_f
+    self.inject(:+) / self.size.to_f
+  end
+  
+  # bereken de standaard deviatie
+  def std_dev
+    count = self.size
+    mean = self.avg
+    return Math.sqrt( self.inject(0) { |sum, e| sum + (e - mean) ** 2 } / count.to_f )
   end
 end
 
 puts "Distributies ophalen voor MonteCarlo"
 @mc_group = MonteCarloGroup.new
 
-# puts "testing"
-# 100.times {
-#   print "Rnd: #{rnd = rand(179)}, Rmc: "
-#   puts mc_group.rnd_mc(rnd)
-# }
-
-# require 'benchmark'
-# Benchmark.bm(12) do |bench|
-#   bench.report("Load data:") do
-#     @mc_20 = MonteCarlo.from_db(0,20)
-#     @mc_40 = MonteCarlo.from_db(21,40)
-#     @mc_60 = MonteCarlo.from_db(41,60)
-#   end
-#   bench.report("MC20 10000x:") do
-#     10000.times { @mc_20.mc }
-#   end
-#   bench.report("MC60 10000x:") do
-#     10000.times { @mc_60.mc }
-#   end
-# end
-
-def gain(new_total_cost)
-  ((@orginal_total_cost - new_total_cost) / @orginal_total_cost.to_f) * 100
+def gain(new_total_cost,original_total_cost = @orginal_total_cost)
+  ((orginal_total_cost - new_total_cost) / orginal_total_cost.to_f) * 100
 end
 
 # Load flights
@@ -109,10 +93,18 @@ numbers = []
     f.pax_2 = @mc_group.rnd_mc(f.pax_2_28d)
   end
   @assignment.flights = flights
-  numbers << gain(@assignment.results[:total_cost])
+  numbers << gain(@assignment.results[:total_cost],@assignment.results(true)[:total_cost])
   puts counter if counter % 500 == 0
 end
-puts "Average: #{numbers.avg}"
+
+# Show basic statistics
 puts "Minimum: #{numbers.min}"
 puts "Maximum: #{numbers.max}"
+puts "Average: #{numbers.avg}"
+puts "StdDev: #{numbers.std_dev}"
 
+# write all the numbers to a textfile (for graphing)
+nr_file = 'data/assignments/montecarlo_results_1.txt'
+puts "writing the numbers to #{nr_file}"
+File.open(nr_file, 'w') {|f| f.write(numbers.join("\n")) }
+puts "done"
