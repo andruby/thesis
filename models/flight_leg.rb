@@ -1,6 +1,7 @@
 class FlightLeg
   attr_accessor :group_id, :original_aircraft, :flight_nr, :distance, :aircraft_id, :haul
   attr_accessor :departure_airport, :departure_time, :arrival_airport, :arrival_time, :demand, :price
+  attr_accessor :demand_28d_before
   
   def initialize(params={})
     params.each_pair { |key,value| self.instance_variable_set(:"@#{key}",value) }
@@ -28,7 +29,11 @@ class FlightLeg
   # verwachte vraag op vertrekdag
   def demand
     # regressie toepassen uit analyse
-    (demand_at_days_before(28) * 0.9526 + 29.8462).round
+    (demand_28d_before * 0.9526 + 29.8462).round
+  end
+  
+  def demand_28d_before
+    @demand_28d_before ||= demand_at_days_before(28)
   end
   
   # geregistreerde vraag X dagen voor het vertrek

@@ -1,14 +1,19 @@
 # just a structure to hold all the data, 
 # logic and algorithm should be in a different file
-class Flight < Struct.new(:id,:original_aircraft, :flight_nr_1, :flight_nr_2, :haul, :departure_time, :arrival_time, :flight_time, :pax_1, :pax_2, :assigned_aircraft)
+class Flight < Struct.new(:id,:original_aircraft, :flight_nr_1, :flight_nr_2, :haul, :departure_time, :arrival_time, :flight_time, :pax_1, :pax_2, :pax_1_28d, :pax_2_28d, :assigned_aircraft)
   attr_accessor :schedule_location
   
-  def aircraft
+  def aircraft(original=false)
+    return self.original_aircraft if original
     (self.assigned_aircraft || self.original_aircraft)
   end
   
   def assign_aircraft(aircraft)
     self.assigned_aircraft = aircraft
+  end
+  
+  def get_28d_demand
+    
   end
   
   # passengers spilled over both legs
@@ -22,8 +27,8 @@ class Flight < Struct.new(:id,:original_aircraft, :flight_nr_1, :flight_nr_2, :h
   end
   
   # Aircraft passenger capacity
-  def capacity
-    self.aircraft.passenger_capacity
+  def capacity(original=false)
+    self.aircraft(original).passenger_capacity
   end
   
   # maximale vraag

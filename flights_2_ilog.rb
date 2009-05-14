@@ -42,8 +42,8 @@ out_legs.each do |out_leg|
       # flight time berekenen
       total_flight_time = (out_leg.arrival_time - out_leg.departure_time) + (in_leg.arrival_time - in_leg.departure_time)
       # flight vullen
-      flights[id] = Flight.new(id,out_leg.original_aircraft,out_leg.flight_nr,in_leg.flight_nr,out_leg.haul,
-                              out_leg.departure_time,in_leg.arrival_time,total_flight_time,out_leg.demand,in_leg.demand)
+      flights[id] = Flight.new(id,out_leg.original_aircraft,out_leg.flight_nr,in_leg.flight_nr,out_leg.haul,out_leg.departure_time,
+                              in_leg.arrival_time,total_flight_time,out_leg.demand,in_leg.demand,out_leg.demand_28d_before,in_leg.demand_28d_before)
       id+=1
     end
   end

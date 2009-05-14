@@ -45,11 +45,20 @@ $BODY$
 CREATE OR REPLACE FUNCTION r_histogram(title text, sql text) 
 	RETURNS text AS 
 $BODY$
-str <- pg.spi.exec(sql);
+data <- pg.spi.exec(sql);
 pdf('/tmp/myhist.pdf');
-hist(str,main=title);
+hist(data,main=title);
 dev.off();
 print('done');
+$BODY$
+	LANGUAGE 'plr' VOLATILE;
+	
+-- Debug functie
+CREATE OR REPLACE FUNCTION r_debug(title text, sql text) 
+	RETURNS text AS 
+$BODY$
+data <<- pg.spi.exec(sql);
+print(data);
 $BODY$
 	LANGUAGE 'plr' VOLATILE;
 
@@ -111,5 +120,8 @@ select (seats_sold(l.id,0)/CAST(t.seats_sold as float)) as "x" from sales_legs l
 	UNION select l.id from sales_ticks t, sales_legs l where t.sales_leg_id = l.id and t.seats_sold >= t.capacity*0.90) order by "x"
 	
 -- haal de distributie op voor verkoop_28 onder de 20
-select seats_sold(l.id,0) as "0d",count(*) from sales_legs l, sales_ticks t 
-	where l.id = t.sales_leg_id and t.date = l.date - 28 and t.seats_sold <= 20 group by "0d" order by "0d"
+select seats_sold(l.id,0) as "0d",count(*) 
+	from sales_legs l, sales_ticks t 
+	where l.id = t.sales_leg_id and t.date = l.date - 28 
+	and t.seats_sold between 40 and 44 
+	group by "0d" order by "0d"

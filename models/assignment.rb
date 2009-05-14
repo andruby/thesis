@@ -45,7 +45,7 @@ class Assignment
   end
   
   # bereken de omzet,kosten en winst
-  def results
+  def results(original=false)
     # zet alle stats op 0
     spill_cost, fixed_cost, var_cost = 0, 0, 0
     # om makkelijker toegankelijk te maken hieronder
@@ -54,16 +54,16 @@ class Assignment
 
     @flights.each do |f|
       [f.pax_1,f.pax_2].each do |pax|
-        if pax >= f.capacity
+        if pax >= f.capacity(original)
           # er is spill
-          spill = pax - f.capacity
+          spill = pax - f.capacity(original)
           total_spill[f.haul] += spill
           spill_cost += spill_price[f.haul] * spill
         end
       end
       # Kosten toevoegen
-      fixed_cost += 2 * (f.aircraft.fixed_cost/100.0) * AssignmentParameters.fixed_cost_100
-      var_cost += (f.flight_time/60) * AssignmentParameters.var_cost_100 * (f.aircraft.var_cost/100.0)
+      fixed_cost += 2 * (f.aircraft(original).fixed_cost/100.0) * AssignmentParameters.fixed_cost_100
+      var_cost += (f.flight_time/60) * AssignmentParameters.var_cost_100 * (f.aircraft(original).var_cost/100.0)
     end
 
     total_cost = fixed_cost + var_cost + spill_cost
