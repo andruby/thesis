@@ -108,7 +108,7 @@ puts "Average: #{numbers.avg}"
 puts "StdDev: #{numbers.std_dev}"
 
 # write all the numbers to a textfile (for graphing)
-nr_file = 'data/assignments/montecarlo_results_1.txt'
+nr_file = 'data/montecarlo/montecarlo_results_1.txt'
 puts "writing the numbers to #{nr_file}"
 File.open(nr_file, 'w') {|f| f.write(numbers.join("\n")) }
 puts "done"

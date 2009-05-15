@@ -112,6 +112,6 @@ Benchmark.bm(12) do |bench|
     puts "results"
     p @pass_results
     write_to_yaml(@assignment.flights,'data/assignments/flights_swapped_1420.yml')    
-    write_to_yaml(@pass_results,'data/assignments/progress_1420.yml')
+    write_to_yaml(@pass_results,'data/progress_reports/progress_1420.yml')
   end
 end

@@ -1,121 +1,205 @@
-<style type="text/css">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Fleet Assignment Viewer</title>
+	<style type="text/css">
 
-div {
-  margin: 0; 
-  padding: 0;
-}
-.flight { 
-  background-color: #35498b;
-  opacity: 0.5;
-  color: white;
-  text-align: center;
-  float: left; 
-  height: 11px; 
-  margin-top: 2px; 
-  margin-bottom: 1px; 
-  -moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-}
-.medium_haul {
-  background-color: #8b3535;
-}
-.date {
-  float: left; width: 60px; text-align: center;
-  margin-bottom: 4px;
-}
-td.schedule {
-  background: url('schedule_bg.png') repeat-x top left; 
-  border-right: 1px solid black; 
-  border-left: 1px solid black;
-}
-body, .schedule td {
-  font-size:9px;
-  font-family: "Century Gothic";
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
-.schedule th {
-  font-size:10px;
-}
-table {
-  clear: left;
-  border-collapse: collapse; 
-  border: 1px solid black;
-  margin-bottom: 4px;
-}
-#winstoverzicht {
-  position: absolute;
-  right: 10px;
-  top: 20px;
-  font-size: 12px;
-}
-td.hr {
-  border-bottom: 1px solid black;
-  height: 5px;
-  margin-bottom: 5px;
-}
-</style>
-<div style='width: 2130px'>&nbsp;
-  <div class="date" style="margin-left: 22px;">14/09</div>
-  <% (15..21).to_a.each do |day|%>
-    <div class="date" style="margin-left: 228px;"><%= day %>/09</div>
-  <% end %>
-</div>
+	div {
+		margin: 0; 
+		padding: 0;
+	}
+	.flight { 
+		background-color: #35498b;
+		opacity: 0.5;
+		color: white;
+		text-align: center;
+		float: left; 
+		height: 11px; 
+		margin-top: 2px; 
+		margin-bottom: 1px; 
+		-moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+	}
+	.medium_haul {
+		background-color: #8b3535;
+	}
+	.date {
+		float: left; width: 60px; text-align: left;
+		margin-bottom: 4px;
+	}
+	td.schedule {
+		background: url('schedule_bg.png') repeat-x top left; 
+		border-left: 1px solid gray;
+		height: 14px;
+	}
+	body, .schedule td {
+		font-size:9px;
+		font-family: "Century Gothic";
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
+	.schedule th {
+		font-size:10px;
+		height: 14px;
+	}
+	table {
+		border-collapse: collapse; 
+		border-top: 1px solid black;
+		border-bottom: 1px solid black;
+		margin-bottom: 4px;
+	}
+	#left_table {
+		border-left: 1px solid black;
+	}
 
-<div id="winstoverzicht">
-  <table border="0" cellspacing="0" cellpadding="3">
-    <tr><th colspan="2"><%= Time.now %></th></tr>
-    <tr><td colspan="2" class="hr"></td></tr>
-    <tr>
-      <td>Spill kosten</td>
-      <td align="right"><%= d_format @results[:spill_cost] %></td>
-    </tr>
-    <tr>
-      <td>Vaste kosten</td>
-      <td align="right"><%= d_format @results[:fixed_cost] %></td>
-    </tr>
-    <tr>
-      <td>Var kosten</td>
-      <td align="right"><%= d_format @results[:var_cost] %></td>
-    </tr>
-    <tr>
-      <td>Totale kosten</td>
-      <td align="right"><%= d_format @results[:total_cost] %></td>
-    </tr>
-    <tr><td colspan="2" class="hr"></td></tr>
-    <tr>
-      <td>Short Spill</td>
-      <td align="right"><%= d_format @results[:spill]["Short"] %></td>
-    </tr>
-    <tr>
-      <td>Medium Spill</td>
-      <td align="right"><%= d_format @results[:spill]["Medium"] %></td>
-    </tr>
-    <tr><td colspan="2" class="hr"></td></tr>
-    <% AssignmentParameters.all.each do |key,value| %> 
-		<% var_name = key.to_s.gsub('@@')%>
-      <tr>
-        <td><%= key %></td>
-        <td align="right"><%= value %></td>
-      </tr>
-    <% end %>   
-  </table>
-</div>
+	.right_table {
+		font-size: 10px;
+		border: 1px solid black;
+		font-size: 11px;
+		width: 210px;
+	}
+	td.hr {
+		border-bottom: 1px solid black;
+		height: 5px;
+		margin-bottom: 5px;
+	}
 
-<% @assignment.fleets.each do |ba_code,fleet| %>
-  <table class="schedule" border="0" cellspacing="0" cellpadding="0" width="2130">
-    <% count = 0%>
-    <% fleet.schedules.each do |schedule| %>
-      <tr>
-        <th width="50px"><%= (count+=1) == 1 ? ba_code : count %></th>
-        <td class="schedule"><%= schedule.to_divs(Time.mktime(2008,9,14)) %></td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
-<div style='width: 2130px'>&nbsp;
-  <div class="date" style="margin-left: 22px;">14/09</div>
-  <% (15..21).to_a.each do |day|%>
-    <div class="date" style="margin-left: 228px;"><%= day %>/09</div>
-  <% end %>
-</div>
+	#main1 {
+		margin:0; padding:0;
+	}
+	#main2 {
+		margin:0; padding:0;
+	}
+	#left {
+		float:left;
+		width:40px;
+		margin:0; padding-top:16px;
+	}
+	#right {
+		float:right;
+		width:210px;
+		margin:0; padding-top:15px;
+		text-align: right;
+		padding-left: 5px;
+	}
+	#middle {
+		margin:0 40px;
+	}
+	#overflow {
+		overflow-x: scroll;
+	}
+	.column-in {
+		margin:0; padding:1px;
+	}
+	.cleaner {
+		clear:both;
+		height:1px;
+		font-size:1px;
+		border:none;
+		margin:0; padding:0;
+		background:transparent;
+	}
+
+	</style>
+	</head>
+	<body>
+	<div id="main1">
+		<div id="main2">
+			<div id="left">
+
+				<% @assignment.fleets.each do |ba_code,fleet| %>
+				<table class="schedule" id="left_table" border="0" cellspacing="0" cellpadding="0" width="40px">
+					<% count = 0%>
+					<% fleet.schedules.each do |schedule| %>
+					<tr>
+						<th><%= (count+=1) == 1 ? ba_code : count %></th>
+					</tr>
+					<% end %>
+				</table>
+				<% end %>
+
+			</div>
+			<div id="right">
+				<div class="column-in">
+
+					<table border="0" cellspacing="0" cellpadding="3" class="right_table">
+						<tr><th colspan="2">Resultaten</th></tr>
+						<tr><td colspan="2" class="hr"></td></tr>
+						<tr>
+							<td>Spill kosten</td>
+							<td align="right"><%= d_format @results[:spill_cost] %></td>
+						</tr>
+						<tr>
+							<td>Vaste kosten</td>
+							<td align="right"><%= d_format @results[:fixed_cost] %></td>
+						</tr>
+						<tr>
+							<td>Var kosten</td>
+							<td align="right"><%= d_format @results[:var_cost] %></td>
+						</tr>
+						<tr>
+							<td>Totale kosten</td>
+							<td align="right"><%= d_format @results[:total_cost] %></td>
+						</tr>
+						<tr><td colspan="2" class="hr"></td></tr>
+						<tr>
+							<td>Short Spill</td>
+							<td align="right"><%= d_format @results[:spill]["Short"] %></td>
+						</tr>
+						<tr>
+							<td>Medium Spill</td>
+							<td align="right"><%= d_format @results[:spill]["Medium"] %></td>
+						</tr>
+						<tr><td colspan="2" class="hr"></td></tr>
+						<% AssignmentParameters.all.each do |key,value| %> 
+						<% var_name = key.to_s.gsub('@@')%>
+						<tr>
+							<td><%= key.gsub('external','xtnl') %></td>
+							<td align="right"><%= value %></td>
+						</tr>
+						<% end %>   
+					</table>
+
+					<p>&nbsp;</p>
+
+					<form action="/" method="get" accept-charset="utf-8">
+						<select name="yaml_file" id="yaml_file" onchange="">
+							<% @configs.each do |config| %>
+								<option value="<%= config %>"><%= config %></option>
+							<% end %>
+						</select><br>
+					<input type="submit" value="Load">
+					</form>
+
+					</div>
+				</div>
+				<div id="middle">
+					<div class="column-in">
+						<div id="overflow">
+
+							<div style='width: 2130px; height: 15px'>&nbsp;
+								<div class="date" style="margin-left: 0px;">14/09</div>
+								<% (15..21).to_a.each do |day|%>
+								<div class="date" style="margin-left: 228px;"><%= day %>/09</div>
+								<% end %>
+							</div>
+
+							<% @assignment.fleets.each do |ba_code,fleet| %>
+							<table class="schedule" border="0" cellspacing="0" cellpadding="0" width="2130">
+								<% count = 0%>
+								<% fleet.schedules.each do |schedule| %>
+								<tr>
+									<td class="schedule"><%= schedule.to_divs(Time.mktime(2008,9,14)) %>&nbsp;</td>
+								</tr>
+								<% end %>
+							</table>
+							<% end %>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
