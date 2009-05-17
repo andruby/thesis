@@ -1,7 +1,7 @@
 require 'benchmark'
 require 'config'
 
-session_name = '14_20'
+session_name = '7_27'
 config = 1
 
 AssignmentParameters.from_ilog("config_#{config}")
@@ -102,8 +102,6 @@ Benchmark.bm(12) do |bench|
   end
   bench.report("Schedule:") do
     @assignment.schedule!
-    @flight_1 = @assignment.flight_with_id(181)
-    @flight_2 = @assignment.flight_with_id(186)
     @pass_results << {:pass => 'original',:results => @assignment.results}
   end
   @x = 0
@@ -113,8 +111,6 @@ Benchmark.bm(12) do |bench|
     end 
   end until @pass_results.last[:swap_count] < 1
   bench.report("WriteYaml:") do
-    puts "results"
-    p @pass_results
     write_to_yaml(@assignment.flights,"data/assignments/#{session_name}_conf#{config}_swapped.yml")    
     write_to_yaml(@pass_results,"data/progress_reports/#{session_name}_conf#{config}_swapped.yml")
   end

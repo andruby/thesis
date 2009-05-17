@@ -50,10 +50,10 @@ class Flight < Struct.new(:id,:original_aircraft, :flight_nr_1, :flight_nr_2, :h
   end
   
   # penalty voor het swappen
-  def swap_penalty
-    return 0 if self.assigned_aircraft.nil?
-    if self.original_aircraft.ba_code != self.assigned_aircraft.ba_code
-      if self.original_aircraft.family == self.assigned_aircraft.family 
+  def swap_penalty(new_craft=self.assigned_aircraft)
+    return 0 unless new_craft
+    if self.original_aircraft.ba_code != new_craft.ba_code
+      if self.original_aircraft.family == new_craft.family 
         return AssignmentParameters.swap_cost_family
       else
         return AssignmentParameters.swap_cost_nonfamily
@@ -75,7 +75,7 @@ class Flight < Struct.new(:id,:original_aircraft, :flight_nr_1, :flight_nr_2, :h
     # Kosten aftrekken
     cost += 2 * (aircraft_type.fixed_cost/100.0) * AssignmentParameters.fixed_cost_100
     cost += (flight_time/(60*60)) * AssignmentParameters.var_cost_100 * (aircraft_type.var_cost/100.0)
-    cost += swap_penalty
+    cost += swap_penalty(aircraft_type)
     return cost
   end
 end

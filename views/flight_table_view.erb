@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Fleet Assignment Viewer</title>
+		<title>Fleet Assignment Viewer: scenario 
+			<%= params[:dataset] %><%= params[:config] %> (<%= params[:mode] %>)</title>
 	<style type="text/css">
 
 	div {
@@ -151,6 +152,11 @@
 							<%= result_with_diff(@results,@original_results,:var_cost) %>
 						</tr>
 						<tr>
+							<td>Bron (K, S, W)</td>
+							<td colspan="2" align="center">(<%= @percent_operationeel %>, 
+								<%= @percent_spill %>, <%= @percent_swap %>) </td>
+						</tr
+						<tr>
 							<td>Totale kosten</td>
 							<%= result_with_diff(@results,@original_results,:total_cost) %>
 						</tr>
@@ -169,7 +175,7 @@
 							<td colspan="2" align="right"><%= @fam_swaps %></td>
 						</tr>
 						<tr>
-							<td>NonFamily Swaps</td>
+							<td>NonFamSwaps</td>
 							<td colspan="2" align="right"><%= @nonfam_swaps %></td>
 						</tr>
 						<tr><td colspan="3" class="hr"></td></tr>
@@ -182,20 +188,31 @@
 						<% end %>   
 					</table>
 
-					<p>&nbsp;</p>
 
 					<div align="center">
 						<form action="/" method="get" accept-charset="utf-8">
-							<select name="yaml_file" id="yaml_file" onchange="">
+							<select name="dataset" id="dataset">
+								<% @datasets.each do |key,value| %>
+									<option value="<%= key %>" <%= 'selected' if key == params[:dataset] %>>
+										<%= key %></option>
+								<% end %>
+							</select>
+							<select name="config" id="config">
 								<% @configs.each do |config| %>
-									<option value="<%= config %>"><%= config %></option>
+									<option value="<%= config %>" <%= 'selected' if config == params[:config].to_i %>>
+										conf <%= config %></option>
+								<% end %>
+							</select>
+							<select name="mode" id="mode">
+								<% @mode.each do |mode| %>
+									<option value="<%= mode %>"  <%= 'selected' if mode == params[:mode] %>>
+										<%= mode %></option>
 								<% end %>
 							</select><br>
 						<input type="submit" value="Load">
 						</form>
 					</div>
 					
-					<p>&nbsp;</p>
 					
 					<table border="0" cellspacing="0" cellpadding="3" class="right_table">
 						<tr><th colspan="2">Vlucht informatie</th></tr>

@@ -1,7 +1,7 @@
 require 'config'
 
-dates = '21_27'
-conf = 'conf1'
+dates = '7_27'
+conf = 'conf7'
 flights_yaml = "data/assignments/#{dates}_original.yml"
 flights_write_yaml = "data/assignments/#{dates}_#{conf}_cplex.yml"
 

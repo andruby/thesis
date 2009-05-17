@@ -3,25 +3,31 @@ require 'sinatra'
 require 'config'
 
 get '/' do
-  # load different parameters
-  AssignmentParameters.from_ilog('config_1')
+  # alle mogelijke datasets
+  @datasets = {'A' => '7_13', 'B' => '14_20', 'C' => '21_27', 'D' => '7_27'}
+  @configs = (1..7).to_a
+  @mode = %w{cplex swapped original}
   
-  # lijst met bestanden samenstellen
-  @configs = []
   config_folder = File.dirname(__FILE__) + '/data/assignments'
-  Dir[config_folder+'/*.yml'].each{ |d| @configs << File.basename(d,'.yml') }
   
-  # vorige lijst
-  session_name = 'week_14_20'
-  cplexed = "data/assignments/#{session_name}_assigned.yml"
-  cplexed_2 = "data/assignments/#{session_name}_assigned_2.yml"
-  original = "data/assignments/#{session_name}_flights.yml"
-  swapped = "data/assignments/flights_swapped_1420.yml"
+  # standaard params
+  params[:dataset] ||= 'B'
+  params[:config] ||= 1
+  params[:mode] ||= 'cplex'
+  
+  # bouw filename
+  @yaml_file = config_folder+"/#{@datasets[params[:dataset]]}"
+  @yaml_file += "_conf#{params[:config]}" unless params[:mode] == 'original'
+  @yaml_file += "_#{params[:mode]}.yml"
 
-  yaml_file = (params[:yaml_file] ? File.join(config_folder,params[:yaml_file] + '.yml') : original)
+  # controleer of het bestand bestaat
+  return "File not found: #{@yaml_file}" unless File.exists?(@yaml_file)
+  
+  # load the parameters
+  AssignmentParameters.from_ilog("config_#{params[:config]}")
 
   # load flights
-  @flights = load_from_yaml(yaml_file)
+  @flights = load_from_yaml(@yaml_file)
   
   # assign flights to aircraft
   @assignment = Assignment.new(@flights)
@@ -41,6 +47,21 @@ get '/' do
   days_needed = (@last_day - @first_day).to_i + 1
   # 1 pixel is 5 minuten, dus 12 pixels zijn 1 uur en 12*24 pixels 1 dag
   @pixels_needed = days_needed*24*12
+  
+  # bereken bron van de kostenreductie
+  orig_real_k = @original_results[:var_cost] + @original_results[:fixed_cost]
+  new_real_k = @results[:var_cost] + @results[:fixed_cost]
+  k_redux = (orig_real_k - new_real_k)
+  spill_redux = (@original_results[:spill_cost] - @results[:spill_cost])
+  swap_penalty =  @results[:swap_cost] 
+  # totale kostenreductie, swap penalty moet er bij
+  total = (@original_results[:total_cost] - @results[:total_cost])
+  total_no_swap = total + swap_penalty
+  total_no_swap = 0.000001 if total_no_swap == 0
+  percent_total_no_swap = (total_no_swap/@original_results[:total_cost].to_f)
+  @percent_operationeel = ((k_redux/total_no_swap.to_f)*percent_total_no_swap*100).round(2)
+  @percent_spill = ((spill_redux/total_no_swap.to_f)*percent_total_no_swap*100).round(2)
+  @percent_swap = ((swap_penalty/total_no_swap.to_f)*percent_total_no_swap*100).round(2)
 
   erb :flight_table_view
 end
