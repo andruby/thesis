@@ -24,7 +24,7 @@ class Assignment
   def swap_count
     fam, nofam = 0, 0
     @flights.each do |flight|
-      if flight.original_aircraft.ba_code != flight.assigned_aircraft.ba_code
+      if flight.assigned_aircraft && (flight.original_aircraft.ba_code != flight.assigned_aircraft.ba_code)
         flight.original_aircraft.family == flight.assigned_aircraft.family ? fam+=1 : nofam += 1
       end
     end
