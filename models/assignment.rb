@@ -19,6 +19,18 @@ class Assignment
     end
   end
   
+  # tel het aantal swaps
+  # geeft een array terug [family,no-family] 
+  def swap_count
+    fam, nofam = 0, 0
+    @flights.each do |flight|
+      if flight.original_aircraft.ba_code != flight.assigned_aircraft.ba_code
+        flight.original_aircraft.family == flight.assigned_aircraft.family ? fam+=1 : nofam += 1
+      end
+    end
+    return [fam,nofam]
+  end
+  
   # find all flights with spill and sort them by spill
   def flights_with_spill
     @flights.select {|f| f.spill > 0 }.collect { |f| [f.spill,f] }.sort_by(&:first).reverse
@@ -47,7 +59,7 @@ class Assignment
   # bereken de omzet,kosten en winst
   def results(original=false)
     # zet alle stats op 0
-    spill_cost, fixed_cost, var_cost = 0, 0, 0
+    spill_cost, fixed_cost, var_cost, swap_cost = 0, 0, 0, 0
     # om makkelijker toegankelijk te maken hieronder
     spill_price = {"Short" => AssignmentParameters.spill_short, "Medium" => AssignmentParameters.spill_medium}
     total_spill = {"Short" => 0, "Medium" => 0}
@@ -64,10 +76,11 @@ class Assignment
       # Kosten toevoegen
       fixed_cost += 2 * (f.aircraft(original).fixed_cost/100.0) * AssignmentParameters.fixed_cost_100
       var_cost += (f.flight_time/(60*60)) * AssignmentParameters.var_cost_100 * (f.aircraft(original).var_cost/100.0)
+      swap_cost += f.swap_penalty unless original
     end
 
-    total_cost = fixed_cost + var_cost + spill_cost
-    return {:total_cost => total_cost,:spill_cost => spill_cost,:fixed_cost => fixed_cost,:var_cost => var_cost,:spill => total_spill,:params => AssignmentParameters.all}
+    total_cost = fixed_cost + var_cost + spill_cost + swap_cost
+    return {:total_cost => total_cost,:spill_cost => spill_cost,:fixed_cost => fixed_cost,:var_cost => var_cost, :swap_cost => swap_cost,:spill => total_spill,:params => AssignmentParameters.all}
   end
 end
 

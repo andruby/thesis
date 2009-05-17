@@ -1,14 +1,15 @@
 require 'config'
 
-session_name = 'week_14_20'
-flights_yaml = "data/assignments/#{session_name}_original.yml"
-flights_write_yaml = "data/assignments/#{session_name}_cplex.yml"
+dates = '21_27'
+conf = 'conf1'
+flights_yaml = "data/assignments/#{dates}_original.yml"
+flights_write_yaml = "data/assignments/#{dates}_#{conf}_cplex.yml"
 
 flights = load_from_yaml(flights_yaml)
 
 cplex_txt = '/Volumes/andrew/unief/thesis - fleet assignment/ILOG/shared_data/assignments/assignments.txt'
 
-puts "extracting cplex assignments"
+puts "extracting cplex assignments: #{flights_yaml}"
 
 cplex_hash = {}
 File.open(cplex_txt,'r') do |file|
@@ -26,5 +27,5 @@ flights.each do |flight|
   raise "NotFound id: #{flight.id}" unless cplex_hash[flight.id]
 end
 
-puts "writing the yaml"
+puts "writing the yaml: #{flights_write_yaml}"
 write_to_yaml(flights,flights_write_yaml)

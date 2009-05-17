@@ -7,4 +7,13 @@
 class AircraftType < ActiveRecord::Base
   has_many :flight_leg_groups
   
+  def family
+    if ["AR8","AR1","146"].include?(ba_code)
+      return 1
+    elsif ["733","734"].include?(ba_code)
+      return 2
+    else
+      return 0
+    end
+  end
 end

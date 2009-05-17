@@ -5,13 +5,12 @@ require 'config'
 ################
 
 # Load default parameters
-config = 1
-AssignmentParameters.from_ilog("config_#{config}")
+AssignmentParameters.from_ilog("config_1")
 
 # flights initialiseren
-start_date = Date.parse("7SEP2008")
-end_date = start_date + 20.days
-session_name = "#{start_date.day}_#{end_date.day}_conf#{config}"
+start_date = Date.parse("21SEP2008")
+end_date = start_date + 6.days
+session_name = "#{start_date.day}_#{end_date.day}"
 flights = Flights.new(session_name,start_date,end_date)
 
 # also save as yaml

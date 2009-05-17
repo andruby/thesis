@@ -30,7 +30,10 @@ get '/' do
   @original_results = @assignment.results(true)
   
   # show a flight
-  @flight = @flights[727]
+  @flight = @flights[5]
+  
+  # tel swaps 
+  @fam_swaps, @nonfam_swaps = @assignment.swap_count
   
   # pixels nodig voor de schedule table
   @first_day = @flights.sort_by(&:departure_time).first.departure_time.to_date

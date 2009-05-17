@@ -19,6 +19,12 @@ class AssignmentParameters
   
   # bewaart de filename waarvan geladen werd
   cattr_accessor :config_name
+  
+  # swap penalty voor een swap binnen een family
+  cattr_accessor :swap_cost_family
+  
+  # swap penalty voor een swap buiten een family  
+  cattr_accessor :swap_cost_nonfamily
     
   # read data from ilog format
   def self.from_ilog(config_name='default')

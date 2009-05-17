@@ -1,7 +1,10 @@
 require 'benchmark'
 require 'config'
 
-session_name = 'week_14_20'
+session_name = '14_20'
+config = 1
+
+AssignmentParameters.from_ilog("config_#{config}")
 
 # All the extra methods required
 # to run the swapping algorithm
@@ -95,7 +98,7 @@ Benchmark.bm(12) do |bench|
     require 'config'
   end
   bench.report("Loading:") do
-    @assignment = Assignment.new(load_from_yaml("data/assignments/#{session_name}_flights.yml"))
+    @assignment = Assignment.new(load_from_yaml("data/assignments/#{session_name}_original.yml"))
   end
   bench.report("Schedule:") do
     @assignment.schedule!
@@ -103,15 +106,16 @@ Benchmark.bm(12) do |bench|
     @flight_2 = @assignment.flight_with_id(186)
     @pass_results << {:pass => 'original',:results => @assignment.results}
   end
-  4.times do |x|
-    bench.report("Pass #{x}:\n") do
+  @x = 0
+  begin
+    bench.report("Pass #{@x+=1}:\n") do
       do_a_pass(@assignment)
-    end
-  end
+    end 
+  end until @pass_results.last[:swap_count] < 1
   bench.report("WriteYaml:") do
     puts "results"
     p @pass_results
-    write_to_yaml(@assignment.flights,'data/assignments/flights_swapped_1420.yml')    
-    write_to_yaml(@pass_results,'data/progress_reports/progress_1420.yml')
+    write_to_yaml(@assignment.flights,"data/assignments/#{session_name}_conf#{config}_swapped.yml")    
+    write_to_yaml(@pass_results,"data/progress_reports/#{session_name}_conf#{config}_swapped.yml")
   end
 end

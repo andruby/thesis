@@ -134,6 +134,11 @@
 						<tr><th colspan="3">Resultaten</th></tr>
 						<tr><td colspan="3" class="hr"></td></tr>
 						<tr>
+							<td>Swap kosten</td>
+					    <td align='right'><%= d_format @results[:swap_cost]%></td>
+							<td align='right'>&nbsp;</td>
+						</tr>
+						<tr>
 							<td>Spill kosten</td>
 							<%= result_with_diff(@results,@original_results,:spill_cost) %>
 						</tr>
@@ -159,11 +164,20 @@
 							<%= result_with_absolute_diff(@results[:spill]["Medium"],@original_results[:spill]["Medium"]) %>
 						</tr>
 						<tr><td colspan="3" class="hr"></td></tr>
+						<tr>
+							<td>Family Swaps</td>
+							<td colspan="2" align="right"><%= @fam_swaps %></td>
+						</tr>
+						<tr>
+							<td>NonFamily Swaps</td>
+							<td colspan="2" align="right"><%= @nonfam_swaps %></td>
+						</tr>
+						<tr><td colspan="3" class="hr"></td></tr>
 						<% AssignmentParameters.all.each do |key,value| %> 
 						<% var_name = key.to_s.gsub('@@')%>
 						<tr>
-							<td><%= key.gsub('external','xtnl') %></td>
-							<td align="right" colspan="2"><%= value %></td>
+							<td colspan="2"><%= key.gsub('external','xtnl') %></td>
+							<td align="right"><%= value %></td>
 						</tr>
 						<% end %>   
 					</table>

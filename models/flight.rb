@@ -41,19 +41,26 @@ class Flight < Struct.new(:id,:original_aircraft, :flight_nr_1, :flight_nr_2, :h
   def to_ilog(id,tijd_nulpunt)
     depT = ((self.departure_time - tijd_nulpunt)/60).round
     arrT = ((self.arrival_time - tijd_nulpunt)/60).round
-    "<#{id}, #{depT}, #{arrT}, #{(flight_time/60.0).round}, #{self.haul}, #{self.pax_1}, #{self.pax_2}>"
-  end
-  
-  # from ILOG formaat
-  def self.from_ilog(tijd_nulpunt,ilog_txt)
-    depT = ((self.departure_time - tijd_nulpunt)/60).round
-    arrT = ((self.arrival_time - tijd_nulpunt)/60).round
-    "<#{id}, #{depT}, #{arrT}, #{arr_minutes}, #{(flight_time/60.0).round}, #{self.haul}, #{self.pax_1}, #{self.pax_2}>"
+    "<#{id}, \"#{original_aircraft.ba_code}\", #{original_aircraft.family}, #{depT}, #{arrT}, #{(flight_time/60.0).round}, #{self.haul}, #{self.pax_1}, #{self.pax_2}>"
   end
   
   # prijs van een ticket
   def price
     haul == "Medium" ? AssignmentParameters.spill_medium : AssignmentParameters.spill_short
+  end
+  
+  # penalty voor het swappen
+  def swap_penalty
+    return 0 if self.assigned_aircraft.nil?
+    if self.original_aircraft.ba_code != self.assigned_aircraft.ba_code
+      if self.original_aircraft.family == self.assigned_aircraft.family 
+        return AssignmentParameters.swap_cost_family
+      else
+        return AssignmentParameters.swap_cost_nonfamily
+      end  
+    else
+      return 0
+    end
   end
   
   # cost of assigning given aircraft to this flight
@@ -68,6 +75,7 @@ class Flight < Struct.new(:id,:original_aircraft, :flight_nr_1, :flight_nr_2, :h
     # Kosten aftrekken
     cost += 2 * (aircraft_type.fixed_cost/100.0) * AssignmentParameters.fixed_cost_100
     cost += (flight_time/(60*60)) * AssignmentParameters.var_cost_100 * (aircraft_type.var_cost/100.0)
+    cost += swap_penalty
     return cost
   end
 end

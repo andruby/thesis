@@ -65,13 +65,14 @@ end
 puts "Distributies ophalen voor MonteCarlo"
 @mc_group = MonteCarloGroup.new
 
-def gain(new_total_cost)
-  ((@original_total_cost - new_total_cost) / @original_total_cost.to_f) * 100
+def gain(new_total_cost,original_total_cost = @original_total_cost)
+  ((original_total_cost - new_total_cost) / original_total_cost.to_f) * 100
 end
 
 # Load flights
-session_name = 'week_14_20'
-flights = load_from_yaml("data/assignments/#{session_name}_assigned_2.yml")
+session_name = '14_20_conf1'
+AssignmentParameters.from_ilog('config_1')
+flights = load_from_yaml("data/assignments/#{session_name}_cplex.yml")
 @assignment = Assignment.new(flights)
 
 # show the original results
@@ -91,7 +92,7 @@ puts gain(assigned_total_cost)
 #####################
 
 numbers = []
-10000.times do |counter|
+2000.times do |counter|
   flights.each do |f| 
     # MonteCarlo Randomize het werkelijk aantal passagiers
     f.pax_1 = @mc_group.rnd_mc(f.pax_1_28d)
