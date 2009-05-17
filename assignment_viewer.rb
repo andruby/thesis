@@ -4,7 +4,7 @@ require 'config'
 
 get '/' do
   # load different parameters
-  AssignmentParameters.from_ilog('lower_spill_cost')
+  AssignmentParameters.from_ilog('config_1')
   
   # lijst met bestanden samenstellen
   @configs = []
@@ -27,6 +27,17 @@ get '/' do
   @assignment = Assignment.new(@flights)
   @assignment.schedule!
   @results = @assignment.results
+  @original_results = @assignment.results(true)
+  
+  # show a flight
+  @flight = @flights[727]
+  
+  # pixels nodig voor de schedule table
+  @first_day = @flights.sort_by(&:departure_time).first.departure_time.to_date
+  @last_day = @flights.sort_by(&:arrival_time).last.arrival_time.to_date
+  days_needed = (@last_day - @first_day).to_i + 1
+  # 1 pixel is 5 minuten, dus 12 pixels zijn 1 uur en 12*24 pixels 1 dag
+  @pixels_needed = days_needed*24*12
 
   erb :flight_table_view
 end
@@ -34,5 +45,27 @@ end
 helpers do
   def d_format(digit)
     digit.round.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")
+  end
+  
+  def r_diff(current,original)
+    diff = (current - original)/original.to_f*100
+    span_class = (diff > 0 ? 'red' : 'green')
+    "<span class='#{span_class}'>#{sprintf('%5.2f', diff.round(2))}%</span>"
+  end
+  
+  def a_diff(current,original)
+    diff = (current - original)
+    span_class = (diff > 0 ? 'red' : 'green')
+    "<span class='#{span_class}'>#{diff}</span>"
+  end
+  
+  def result_with_diff(current,original,key)
+    "<td align='right'>#{d_format current[key]}</td>
+		<td align='right'>#{r_diff current[key],original[key]}</td>"
+  end
+  
+  def result_with_absolute_diff(current,original)
+    "<td align='right'>#{d_format current}</td>
+		<td align='right'>#{a_diff current,original}</td>"
   end
 end

@@ -63,7 +63,7 @@ class Assignment
       end
       # Kosten toevoegen
       fixed_cost += 2 * (f.aircraft(original).fixed_cost/100.0) * AssignmentParameters.fixed_cost_100
-      var_cost += (f.flight_time/60) * AssignmentParameters.var_cost_100 * (f.aircraft(original).var_cost/100.0)
+      var_cost += (f.flight_time/(60*60)) * AssignmentParameters.var_cost_100 * (f.aircraft(original).var_cost/100.0)
     end
 
     total_cost = fixed_cost + var_cost + spill_cost
@@ -140,7 +140,7 @@ class Assignment
         prev_arr_time = nil
         @flights.sort_by { |f| f.departure_time}.each do |f|
           # set prev arrival_time to midnight if it hasn't been set
-          prev_arr_time = starting_date unless prev_arr_time
+          prev_arr_time = starting_date.at_midnight unless prev_arr_time
           # set left and width in pixels according (1px = 5minutes)
           left = ((f.departure_time - prev_arr_time).abs / (5*60).to_f).round
           width = ((f.arrival_time - f.departure_time) / (5*60).to_f).round

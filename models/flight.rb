@@ -67,7 +67,7 @@ class Flight < Struct.new(:id,:original_aircraft, :flight_nr_1, :flight_nr_2, :h
     end
     # Kosten aftrekken
     cost += 2 * (aircraft_type.fixed_cost/100.0) * AssignmentParameters.fixed_cost_100
-    cost += (flight_time/60) * AssignmentParameters.var_cost_100 * (aircraft_type.var_cost/100.0)
+    cost += (flight_time/(60*60)) * AssignmentParameters.var_cost_100 * (aircraft_type.var_cost/100.0)
     return cost
   end
 end

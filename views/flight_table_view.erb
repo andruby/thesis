@@ -25,12 +25,13 @@
 		background-color: #8b3535;
 	}
 	.date {
-		float: left; width: 60px; text-align: left;
+		float: left; width: 40px; text-align: left;
 		margin-bottom: 4px;
 	}
 	td.schedule {
 		background: url('schedule_bg.png') repeat-x top left; 
 		border-left: 1px solid gray;
+		border-right: 1px solid gray;
 		height: 14px;
 	}
 	body, .schedule td {
@@ -61,8 +62,9 @@
 	}
 	td.hr {
 		border-bottom: 1px solid black;
-		height: 5px;
-		margin-bottom: 5px;
+		height: 0px;
+		margin-bottom: 2px;
+		margin-top: 0px;
 	}
 
 	#main1 {
@@ -80,7 +82,6 @@
 		float:right;
 		width:210px;
 		margin:0; padding-top:15px;
-		text-align: right;
 		padding-left: 5px;
 	}
 	#middle {
@@ -99,6 +100,12 @@
 		border:none;
 		margin:0; padding:0;
 		background:transparent;
+	}
+	.green {
+		color: green;
+	}
+	.red {
+		color: red;
 	}
 
 	</style>
@@ -124,53 +131,104 @@
 				<div class="column-in">
 
 					<table border="0" cellspacing="0" cellpadding="3" class="right_table">
-						<tr><th colspan="2">Resultaten</th></tr>
-						<tr><td colspan="2" class="hr"></td></tr>
+						<tr><th colspan="3">Resultaten</th></tr>
+						<tr><td colspan="3" class="hr"></td></tr>
 						<tr>
 							<td>Spill kosten</td>
-							<td align="right"><%= d_format @results[:spill_cost] %></td>
+							<%= result_with_diff(@results,@original_results,:spill_cost) %>
 						</tr>
 						<tr>
 							<td>Vaste kosten</td>
-							<td align="right"><%= d_format @results[:fixed_cost] %></td>
+							<%= result_with_diff(@results,@original_results,:fixed_cost) %>
 						</tr>
 						<tr>
 							<td>Var kosten</td>
-							<td align="right"><%= d_format @results[:var_cost] %></td>
+							<%= result_with_diff(@results,@original_results,:var_cost) %>
 						</tr>
 						<tr>
 							<td>Totale kosten</td>
-							<td align="right"><%= d_format @results[:total_cost] %></td>
+							<%= result_with_diff(@results,@original_results,:total_cost) %>
 						</tr>
-						<tr><td colspan="2" class="hr"></td></tr>
+						<tr><td colspan="3" class="hr"></td></tr>
 						<tr>
 							<td>Short Spill</td>
-							<td align="right"><%= d_format @results[:spill]["Short"] %></td>
+							<%= result_with_absolute_diff(@results[:spill]["Short"],@original_results[:spill]["Short"]) %>
 						</tr>
 						<tr>
 							<td>Medium Spill</td>
-							<td align="right"><%= d_format @results[:spill]["Medium"] %></td>
+							<%= result_with_absolute_diff(@results[:spill]["Medium"],@original_results[:spill]["Medium"]) %>
 						</tr>
-						<tr><td colspan="2" class="hr"></td></tr>
+						<tr><td colspan="3" class="hr"></td></tr>
 						<% AssignmentParameters.all.each do |key,value| %> 
 						<% var_name = key.to_s.gsub('@@')%>
 						<tr>
 							<td><%= key.gsub('external','xtnl') %></td>
-							<td align="right"><%= value %></td>
+							<td align="right" colspan="2"><%= value %></td>
 						</tr>
 						<% end %>   
 					</table>
 
 					<p>&nbsp;</p>
 
-					<form action="/" method="get" accept-charset="utf-8">
-						<select name="yaml_file" id="yaml_file" onchange="">
-							<% @configs.each do |config| %>
-								<option value="<%= config %>"><%= config %></option>
-							<% end %>
-						</select><br>
-					<input type="submit" value="Load">
-					</form>
+					<div align="center">
+						<form action="/" method="get" accept-charset="utf-8">
+							<select name="yaml_file" id="yaml_file" onchange="">
+								<% @configs.each do |config| %>
+									<option value="<%= config %>"><%= config %></option>
+								<% end %>
+							</select><br>
+						<input type="submit" value="Load">
+						</form>
+					</div>
+					
+					<p>&nbsp;</p>
+					
+					<table border="0" cellspacing="0" cellpadding="3" class="right_table">
+						<tr><th colspan="2">Vlucht informatie</th></tr>
+						<tr><td colspan="2" class="hr"></td></tr>
+						<tr>
+							<td>Vlucht id</td>
+							<td><%= @flight.id %></td>
+						</tr>
+						<tr>
+							<td>Original fleet</td>
+							<td><%= @flight.original_aircraft.ba_code %></td>
+						</tr>
+						<tr>
+							<td>Assigned fleet</td>
+							<td><%= @flight.assigned_aircraft.ba_code if @flight.assigned_aircraft %></td>
+						</tr>
+						<tr>
+							<td>Haul</td>
+							<td><%= @flight.haul %></td>
+						</tr>
+						<tr><td colspan="2" class="hr"></td></tr>
+						<tr>
+							<td>flight nr 1</td>
+							<td><%= @flight.flight_nr_1 %></td>
+						</tr>
+						<tr>
+							<td>D(0) leg 1</td>
+							<td><%= @flight.pax_1 %></td>
+						</tr>
+						<tr>
+							<td>D(28) leg 1</td>
+							<td><%= @flight.pax_1_28d %></td>
+						</tr>
+						<tr><td colspan="2" class="hr"></td></tr>
+						<tr>
+							<td>flight nr 2</td>
+							<td><%= @flight.flight_nr_2 %></td>
+						</tr>
+						<tr>
+							<td>D(0) leg 2</td>
+							<td><%= @flight.pax_2 %></td>
+						</tr>
+						<tr>
+							<td>D(28) leg 2</td>
+							<td><%= @flight.pax_2_28d %></td>
+						</tr> 
+					</table>										
 
 					</div>
 				</div>
@@ -178,19 +236,19 @@
 					<div class="column-in">
 						<div id="overflow">
 
-							<div style='width: 2130px; height: 15px'>&nbsp;
-								<div class="date" style="margin-left: 0px;">14/09</div>
-								<% (15..21).to_a.each do |day|%>
-								<div class="date" style="margin-left: 228px;"><%= day %>/09</div>
+							<div style='width: <%= @pixels_needed %>px; height: 15px'>&nbsp;
+								<div class="date" style="margin-left: 0px;"><%= "#{@first_day.day}/#{@first_day.month}" %></div>
+								<% (@first_day+1.day).upto(@last_day) do |date|%>
+								<div class="date" style="margin-left: 248px;"><%= "#{date.day}/#{date.month}" %></div>
 								<% end %>
 							</div>
 
 							<% @assignment.fleets.each do |ba_code,fleet| %>
-							<table class="schedule" border="0" cellspacing="0" cellpadding="0" width="2130">
+							<table class="schedule" border="0" cellspacing="0" cellpadding="0" width="<%= @pixels_needed %>">
 								<% count = 0%>
 								<% fleet.schedules.each do |schedule| %>
 								<tr>
-									<td class="schedule"><%= schedule.to_divs(Time.mktime(2008,9,14)) %>&nbsp;</td>
+									<td class="schedule"><%= schedule.to_divs(@first_day) %>&nbsp;</td>
 								</tr>
 								<% end %>
 							</table>

@@ -1,8 +1,8 @@
 require 'config'
 
 session_name = 'week_14_20'
-flights_yaml = "data/assignments/#{session_name}_flights.yml"
-flights_write_yaml = "data/assignments/#{session_name}_assigned_2.yml"
+flights_yaml = "data/assignments/#{session_name}_original.yml"
+flights_write_yaml = "data/assignments/#{session_name}_cplex.yml"
 
 flights = load_from_yaml(flights_yaml)
 
