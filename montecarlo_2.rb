@@ -1,30 +1,30 @@
 require 'config'
 
 class MonteCarlo
-  attr_accessor :possibility_array
+  attr_accessor :possibility_distribution
   # geef random een waarde uit de array van mogelijkheden
   def mc
     rnd = rand(total_count)
-    @possibility_array.detect{ |pos| (rnd -= pos.last) <= 0 }.first
+    @possibility_distribution.detect{ |pos| (rnd -= pos.last) <= 0 }.first
   end
   
   # tel het totaal aantal 'frequencies'
   def total_count
-    @total_count ||= @possibility_array.inject(0) { |sum, n| sum + n.last }
+    @total_count ||= @possibility_distribution.inject(0) { |sum, n| sum + n.last }
   end
   
-  # haal de distributie voor gegeven input range
+  # haal de kansverdeling uit de database voor gegeven input range
   def self.from_db(min_seat_sold,max_seat_sold)
     sql = 'select seats_sold(l.id,0) as "0d",count(*) from sales_legs l, sales_ticks t 
               where l.id = t.sales_leg_id and t.date = l.date - 28 and t.seats_sold 
               BETWEEN '+min_seat_sold.to_s+' and '+max_seat_sold.to_s+' group by "0d" order by "0d"'
     mc = MonteCarlo.new
-    mc.possibility_array = SalesLeg.connection.select_all(sql).collect{ |t| [t["0d"].to_i,t["count"].to_i]}
+    mc.possibility_distribution = SalesLeg.connection.select_all(sql).collect{ |t| [t["0d"].to_i,t["count"].to_i]}
     return mc
   end
 end
 
-# een groep met alle MonteCarlo generators voor alle begin waarden
+# MonteCarloGroup is een object die alle MonteCarlo generators voor elke input range bijhoud
 class MonteCarloGroup
   attr_accessor :monte_carlos, :stap, :aantal
   
@@ -47,7 +47,7 @@ class MonteCarloGroup
   end
 end
 
-# Functies toevoegen aan Array
+# Functies toevoegen aan Array's
 class Array 
   # bereken het gemiddelde
   def avg
@@ -65,17 +65,18 @@ end
 puts "Distributies ophalen voor MonteCarlo"
 @mc_group = MonteCarloGroup.new
 
+# functie die de procentuele kostenreductie berekent
 def gain(new_total_cost,original_total_cost = @original_total_cost)
   ((original_total_cost - new_total_cost) / original_total_cost.to_f) * 100
 end
 
-# Load flights
-session_name = '14_20_conf1'
-AssignmentParameters.from_ilog('config_1')
+# flights inladen
+session_name = '7_27_conf7'
+AssignmentParameters.from_ilog('config_7')
 flights = load_from_yaml("data/assignments/#{session_name}_cplex.yml")
 @assignment = Assignment.new(flights)
 
-# show the original results
+# toon de originele results
 print "original results: "
 original_result = @assignment.results(true)
 puts @original_total_cost = original_result[:total_cost]
@@ -92,25 +93,25 @@ puts gain(assigned_total_cost)
 #####################
 
 numbers = []
-2000.times do |counter|
+10000.times do |counter|
   flights.each do |f| 
-    # MonteCarlo Randomize het werkelijk aantal passagiers
+    # MonteCarlo Randomized het werkelijk aantal passagiers van elke vlucht
     f.pax_1 = @mc_group.rnd_mc(f.pax_1_28d)
     f.pax_2 = @mc_group.rnd_mc(f.pax_2_28d)
   end
   @assignment.flights = flights
   numbers << gain(@assignment.results[:total_cost],@assignment.results(true)[:total_cost])
-  puts counter if counter % 500 == 0
+  puts "#{counter}" if counter % 500 == 0 # progress indicatie
 end
 
-# Show basic statistics
+# Toon basic statistieken
 puts "Minimum: #{numbers.min}"
 puts "Maximum: #{numbers.max}"
 puts "Average: #{numbers.avg}"
 puts "StdDev: #{numbers.std_dev}"
 
-# write all the numbers to a textfile (for graphing)
-nr_file = 'data/montecarlo/montecarlo_results_2.txt'
+# Schrijf alle nummers naar een textfile (voor de grafieken)
+nr_file = 'data/montecarlo/montecarlo_results_2_d7.txt'
 puts "writing the numbers to #{nr_file}"
 File.open(nr_file, 'w') {|f| f.write(numbers.join("\n")) }
 puts "done"

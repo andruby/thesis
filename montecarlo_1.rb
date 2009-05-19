@@ -70,8 +70,9 @@ def gain(new_total_cost)
 end
 
 # Load flights
-session_name = 'week_14_20'
-flights = load_from_yaml("data/assignments/#{session_name}_assigned_2.yml")
+session_name = '7_27_conf1'
+AssignmentParameters.from_ilog('config_1')
+flights = load_from_yaml("data/assignments/#{session_name}_cplex.yml")
 @assignment = Assignment.new(flights)
 
 # show the original results
