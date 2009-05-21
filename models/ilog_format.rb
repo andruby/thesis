@@ -1,7 +1,7 @@
 # easy interface with Ilog
 module IlogFormat
   # Map waar alle shared_data met ilog wordt gedaan
-  SharedDataDir = '/Volumes/andrew/unief/thesis - fleet assignment/ILOG/shared_data/'
+  SharedDataDir = "#{File.dirname(__FILE__)}/../Cplex/shared_data/"
   
   def self.read_from_ilog(type,config_name,&block)
     File.open(self.shared_filename(type,config_name),'r') do |file|

@@ -180,7 +180,7 @@
 						</tr>
 						<tr><td colspan="3" class="hr"></td></tr>
 						<% AssignmentParameters.all.each do |key,value| %> 
-						<% var_name = key.to_s.gsub('@@')%>
+						<% var_name = key.to_s.gsub('@@','')%>
 						<tr>
 							<td colspan="2"><%= key.gsub('external','xtnl') %></td>
 							<td align="right"><%= value %></td>

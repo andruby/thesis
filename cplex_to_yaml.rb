@@ -1,3 +1,6 @@
+# Convertor om die de outputfile van cplex omzet naar een yaml bestand
+# dat gebruikt kan worden door de assignment_viewer
+
 require 'config'
 
 dates = '7_27'
@@ -7,7 +10,7 @@ flights_write_yaml = "data/assignments/#{dates}_#{conf}_cplex.yml"
 
 flights = load_from_yaml(flights_yaml)
 
-cplex_txt = '/Volumes/andrew/unief/thesis - fleet assignment/ILOG/shared_data/assignments/assignments.txt'
+cplex_txt = '../Cplex/shared_data/assignments/assignments.txt'
 
 puts "extracting cplex assignments: #{flights_yaml}"
 

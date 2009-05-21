@@ -1,0 +1,15 @@
+/*********************************************
+ * OPL 5.0 Data
+ * Author: Andrew Fecheyr Lippens
+ * Creation Date: 12/05/2009 at 3:53
+ *********************************************/
+
+// Start parameter declaration
+rotation_time_bru = 40;
+rotation_time_external = 30;
+fixed_cost_100 = 1920;
+var_cost_100 = 2850;
+spill_short = 100;
+spill_medium = 150;
+swap_cost_family = 0;
+swap_cost_nonfamily = 0;

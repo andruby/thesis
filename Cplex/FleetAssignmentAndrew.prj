@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<project>
+
+
+
+
+
+            <configs>
+
+
+
+
+
+                
+
+
+
+          
+    
+          <config name="B1" category="opl" default="false" closed="true">
+
+            <ref name="FleetAssignmentAndrew.mod"/>
+
+            <ref name="shared_data\fleets\default.dat"/>
+
+            <ref name="configs#shared_data\parameters\config_1.dat"/>
+
+            <ref name="flights#shared_data\flights\14_20.dat"/>
+
+        </config>
+
+        <config name="A1" category="opl" default="false" closed="true">
+
+            <ref name="flights#shared_data\flights\7_13.dat"/>
+
+            <ref name="configs#shared_data\parameters\config_1.dat"/>
+
+            <ref name="shared_data\fleets\default.dat"/>
+
+            <ref name="FleetAssignmentAndrew.mod"/>
+
+        </config>
+
+        <config name="C1" category="opl" default="false" closed="true">
+
+            <ref name="FleetAssignmentAndrew.mod"/>
+
+            <ref name="shared_data\fleets\default.dat"/>
+
+            <ref name="configs#shared_data\parameters\config_1.dat"/>
+
+            <ref name="flights#shared_data\flights\21_27.dat"/>
+
+        </config>
+
+        <config name="D1" category="opl" default="false" closed="true">
+
+            <ref name="flights#shared_data\flights\7_27.dat"/>
+
+            <ref name="shared_data\fleets\default.dat"/>
+
+            <ref name="configs#shared_data\parameters\config_1.dat"/>
+
+            <ref name="FleetAssignmentAndrew.mod"/>
+
+        </config>
+
+      <config name="A2" category="opl" default="false" closed="true">
+      <ref name="FleetAssignmentAndrew.mod"/>
+      <ref name="shared_data\fleets\default.dat"/>
+      <ref name="flights#shared_data\flights\7_13.dat"/>
+      <ref name="configs#shared_data\parameters\config_2.dat"/>
+    </config>
+    <config name="B2" category="opl" default="false" closed="true">
+      <ref name="FleetAssignmentAndrew.mod"/>
+      <ref name="shared_data\fleets\default.dat"/>
+      <ref name="flights#shared_data\flights\14_20.dat"/>
+      <ref name="configs#shared_data\parameters\config_2.dat"/>
+    </config>
+    <config name="C2" category="opl" default="false" closed="true">
+      <ref name="FleetAssignmentAndrew.mod"/>
+      <ref name="shared_data\fleets\default.dat"/>
+      <ref name="flights#shared_data\flights\21_27.dat"/>
+      <ref name="configs#shared_data\parameters\config_2.dat"/>
+    </config>
+    <config name="D2" category="opl" default="false" closed="true">
+      <ref name="FleetAssignmentAndrew.mod"/>
+      <ref name="shared_data\fleets\default.dat"/>
+      <ref name="flights#shared_data\flights\7_27.dat"/>
+      <ref name="configs#shared_data\parameters\config_2.dat"/>
+    </config>
+    <config name="D3" category="opl" default="false" closed="true">
+      <ref name="FleetAssignmentAndrew.mod"/>
+      <ref name="shared_data\fleets\default.dat"/>
+      <ref name="flights#shared_data\flights\7_27.dat"/>
+      <ref name="configs#shared_data\parameters\config_3.dat"/>
+    </config>
+    <config name="D4" category="opl" default="false" closed="true">
+      <ref name="FleetAssignmentAndrew.mod"/>
+      <ref name="shared_data\fleets\default.dat"/>
+      <ref name="flights#shared_data\flights\7_27.dat"/>
+      <ref name="configs#shared_data\parameters\config_4.dat"/>
+    </config>
+    <config name="D5" category="opl" default="false" closed="true">
+      <ref name="FleetAssignmentAndrew.mod"/>
+      <ref name="shared_data\fleets\default.dat"/>
+      <ref name="flights#shared_data\flights\7_27.dat"/>
+      <ref name="configs#shared_data\parameters\config_5.dat"/>
+    </config>
+    <config name="D6" category="opl" default="false">
+      <ref name="FleetAssignmentAndrew.mod"/>
+      <ref name="shared_data\fleets\default.dat"/>
+      <ref name="flights#shared_data\flights\7_27.dat"/>
+      <ref name="configs#shared_data\parameters\config_6.dat"/>
+    </config>
+    <config name="D7" category="opl" default="true">
+      <ref name="configs#shared_data\parameters\config_7.dat"/>
+      <ref name="flights#shared_data\flights\7_27.dat"/>
+      <ref name="FleetAssignmentAndrew.mod"/>
+      <ref name="shared_data\fleets\default.dat"/>
+    </config>
+  </configs>
+
+
+
+
+
+            <model name="FleetAssignmentAndrew.mod"/>
+
+
+
+
+
+            <setting name="FleetAssignmentAndrew.ops"/>
+
+
+
+
+
+  
+      
+
+
+    
+
+    
+
+  
+  
+    <data name="shared_data\fleets\default.dat"/>
+
+    <folder name="flights">
+
+        <data name="shared_data\flights\14_20.dat"/>
+
+        <data name="shared_data\flights\7_13.dat"/>
+
+        <data name="shared_data\flights\7_27.dat"/>
+
+        <data name="shared_data\flights\21_27.dat"/>
+
+    </folder>
+
+    <folder name="configs">
+
+        <data name="shared_data\parameters\config_1.dat"/>
+
+      <data name="shared_data\parameters\config_2.dat"/>
+    <data name="shared_data\parameters\config_3.dat"/>
+    <data name="shared_data\parameters\config_4.dat"/>
+    <data name="shared_data\parameters\config_5.dat"/>
+    <data name="shared_data\parameters\config_6.dat"/>
+    <data name="shared_data\parameters\config_7.dat"/>
+  </folder>
+
+</project>

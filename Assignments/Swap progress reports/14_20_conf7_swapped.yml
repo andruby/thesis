@@ -1,0 +1,109 @@
+--- 
+- :pass: original
+  :results: 
+    :total_cost: 8124613.375
+    :spill_cost: 60000
+    :fixed_cost: 2131424.0
+    :var_cost: 5933189.375
+    :swap_cost: 0
+    :spill: 
+      Short: 375
+      Medium: 150
+    :params: 
+      rotation_time_bru: 2400
+      rotation_time_external: 1800
+      fixed_cost_100: 1600
+      var_cost_100: 2375
+      spill_short: 100
+      spill_medium: 150
+      config_name: config_7
+      swap_cost_family: 0
+      swap_cost_nonfamily: 900000
+- :pass: 1
+  :swap_count: 63
+  :time_ran: 60.239547
+  :results: 
+    :total_cost: 8107692.4375
+    :spill_cost: 46600
+    :fixed_cost: 2131424.0
+    :var_cost: 5929668.4375
+    :swap_cost: 0
+    :spill: 
+      Short: 301
+      Medium: 110
+    :params: 
+      rotation_time_bru: 2400
+      rotation_time_external: 1800
+      fixed_cost_100: 1600
+      var_cost_100: 2375
+      spill_short: 100
+      spill_medium: 150
+      config_name: config_7
+      swap_cost_family: 0
+      swap_cost_nonfamily: 900000
+- :pass: 2
+  :swap_count: 10
+  :time_ran: 57.245087
+  :results: 
+    :total_cost: 8105868.6875
+    :spill_cost: 44800
+    :fixed_cost: 2131424.0
+    :var_cost: 5929644.6875
+    :swap_cost: 0
+    :spill: 
+      Short: 283
+      Medium: 110
+    :params: 
+      rotation_time_bru: 2400
+      rotation_time_external: 1800
+      fixed_cost_100: 1600
+      var_cost_100: 2375
+      spill_short: 100
+      spill_medium: 150
+      config_name: config_7
+      swap_cost_family: 0
+      swap_cost_nonfamily: 900000
+- :pass: 3
+  :swap_count: 1
+  :time_ran: 52.182044
+  :results: 
+    :total_cost: 8104356.8125
+    :spill_cost: 43300
+    :fixed_cost: 2131424.0
+    :var_cost: 5929632.8125
+    :swap_cost: 0
+    :spill: 
+      Short: 268
+      Medium: 110
+    :params: 
+      rotation_time_bru: 2400
+      rotation_time_external: 1800
+      fixed_cost_100: 1600
+      var_cost_100: 2375
+      spill_short: 100
+      spill_medium: 150
+      config_name: config_7
+      swap_cost_family: 0
+      swap_cost_nonfamily: 900000
+- :pass: 4
+  :swap_count: 0
+  :time_ran: 54.550215
+  :results: 
+    :total_cost: 8104356.8125
+    :spill_cost: 43300
+    :fixed_cost: 2131424.0
+    :var_cost: 5929632.8125
+    :swap_cost: 0
+    :spill: 
+      Short: 268
+      Medium: 110
+    :params: 
+      rotation_time_bru: 2400
+      rotation_time_external: 1800
+      fixed_cost_100: 1600
+      var_cost_100: 2375
+      spill_short: 100
+      spill_medium: 150
+      config_name: config_7
+      swap_cost_family: 0
+      swap_cost_nonfamily: 900000

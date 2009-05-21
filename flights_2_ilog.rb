@@ -1,5 +1,7 @@
 require 'config'
 
+connect_to_db
+
 ################
 # Configuratie #
 ################

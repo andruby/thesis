@@ -1,3 +1,8 @@
+# 
+# Visualisatie software. Geschreven als Sinatra webapplicatie. http://www.sinatrarb.com/
+# Online versie op http://thesis.andrewsblog.org
+#
+
 require 'rubygems'
 require 'sinatra'
 require 'config'
@@ -8,12 +13,12 @@ get '/' do
   @configs = (1..7).to_a
   @mode = %w{cplex swapped original}
   
-  config_folder = File.dirname(__FILE__) + '/data/assignments'
+  config_folder = File.dirname(__FILE__) + '/Assignments'
   
   # standaard params
   params[:dataset] ||= 'B'
   params[:config] ||= 1
-  params[:mode] ||= 'cplex'
+  params[:mode] ||= 'original'
   
   # bouw filename
   @yaml_file = config_folder+"/#{@datasets[params[:dataset]]}"
@@ -48,7 +53,7 @@ get '/' do
   # 1 pixel is 5 minuten, dus 12 pixels zijn 1 uur en 12*24 pixels 1 dag
   @pixels_needed = days_needed*24*12
   
-  # bereken bron van de kostenreductie
+  # bereken de bronnen van de kostenreductie
   orig_real_k = @original_results[:var_cost] + @original_results[:fixed_cost]
   new_real_k = @results[:var_cost] + @results[:fixed_cost]
   k_redux = (orig_real_k - new_real_k)
@@ -63,9 +68,11 @@ get '/' do
   @percent_spill = ((spill_redux/total_no_swap.to_f)*percent_total_no_swap*100).round(2)
   @percent_swap = ((swap_penalty/total_no_swap.to_f)*percent_total_no_swap*100).round(2)
 
+  # render de html template in views/flight_table_view.erb
   erb :flight_table_view
 end
 
+# Helpers voor het formateren van de html
 helpers do
   def d_format(digit)
     digit.round.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")

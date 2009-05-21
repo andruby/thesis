@@ -27,7 +27,7 @@ class AssignmentParameters
   cattr_accessor :swap_cost_nonfamily
     
   # read data from ilog format
-  def self.from_ilog(config_name='default')
+  def self.from_ilog(config_name='config_1')
     IlogFormat.read_from_ilog(:parameters,config_name) do |file|
       while((line = file.gets))
         if line.include?('=')
