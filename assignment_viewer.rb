@@ -18,7 +18,7 @@ get '/' do
   # standaard params
   params[:dataset] ||= 'B'
   params[:config] ||= 1
-  params[:mode] ||= 'original'
+  params[:mode] ||= 'cplex'
   
   # bouw filename
   @yaml_file = config_folder+"/#{@datasets[params[:dataset]]}"
