@@ -8,31 +8,8 @@ require 'sinatra'
 require 'config'
 
 get '/' do
-  # alle mogelijke datasets
-  @datasets = {'A' => '7_13', 'B' => '14_20', 'C' => '21_27', 'D' => '7_27'}
-  @configs = (1..7).to_a
-  @mode = %w{cplex swapped original}
-  
-  config_folder = File.dirname(__FILE__) + '/Assignments'
-  
-  # standaard params
-  params[:dataset] ||= 'B'
-  params[:config] ||= 1
-  params[:mode] ||= 'cplex'
-  
-  # bouw filename
-  @yaml_file = config_folder+"/#{@datasets[params[:dataset]]}"
-  @yaml_file += "_conf#{params[:config]}" unless params[:mode] == 'original'
-  @yaml_file += "_#{params[:mode]}.yml"
-
-  # controleer of het bestand bestaat
-  return "File not found: #{@yaml_file}" unless File.exists?(@yaml_file)
-  
-  # load the parameters
-  AssignmentParameters.from_ilog("config_#{params[:config]}")
-
-  # load flights
-  @flights = load_from_yaml(@yaml_file)
+  # load the flights 
+  @flights = load_flights_from_params(params)
   
   # assign flights to aircraft
   @assignment = Assignment.new(@flights)
@@ -72,6 +49,41 @@ get '/' do
   erb :flight_table_view
 end
 
+get '/flight' do
+  @flights = load_flights_from_params(params)
+  @flight = @flights[params[:flight_id].to_i]
+  
+  erb :flight_info
+end
+
+def load_flights_from_params(params)
+  # alle mogelijke datasets
+  @datasets = {'A' => '7_13', 'B' => '14_20', 'C' => '21_27', 'D' => '7_27'}
+  @configs = (1..7).to_a
+  @mode = %w{cplex swapped original}
+  
+  config_folder = File.dirname(__FILE__) + '/Assignments'
+  
+  # standaard params
+  params[:dataset] ||= 'B'
+  params[:config] ||= 1
+  params[:mode] ||= 'cplex'
+  
+  # bouw filename
+  @yaml_file = config_folder+"/#{@datasets[params[:dataset]]}"
+  @yaml_file += "_conf#{params[:config]}" unless params[:mode] == 'original'
+  @yaml_file += "_#{params[:mode]}.yml"
+
+  # controleer of het bestand bestaat
+  return "File not found: #{@yaml_file}" unless File.exists?(@yaml_file)
+  
+  # load the parameters
+  AssignmentParameters.from_ilog("config_#{params[:config]}")
+
+  # load flights
+  @flights = load_from_yaml(@yaml_file)
+end
+
 # Helpers voor het formateren van de html
 helpers do
   def d_format(digit)
@@ -98,5 +110,9 @@ helpers do
   def result_with_absolute_diff(current,original)
     "<td align='right'>#{d_format current}</td>
 		<td align='right'>#{a_diff current,original}</td>"
+  end
+  
+  def url_for_flight_info
+    "/flight?dataset=#{params[:dataset]}&config=#{params[:config]}&mode=#{params[:mode]}&flight_id="
   end
 end

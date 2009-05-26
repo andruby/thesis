@@ -110,6 +110,25 @@
 	}
 
 	</style>
+	<script type="text/javascript">
+	var http = false;
+
+	if(navigator.appName == "Microsoft Internet Explorer") {
+	  http = new ActiveXObject("Microsoft.XMLHTTP");
+	} else {
+	  http = new XMLHttpRequest();
+	} 
+
+	function replace_flight_info(flight_id) {
+	  http.open("GET", "<%= url_for_flight_info %>" + flight_id, true);
+	  http.onreadystatechange=function() {
+	    if(http.readyState == 4) {
+	      document.getElementById('flight_info').innerHTML = http.responseText;
+	    }
+	  }
+	  http.send(null);
+	}
+	</script>
 	</head>
 	<body>
 	<div id="main1">
@@ -214,52 +233,9 @@
 					</div>
 					
 					
-					<table border="0" cellspacing="0" cellpadding="3" class="right_table">
-						<tr><th colspan="2">Vlucht informatie</th></tr>
-						<tr><td colspan="2" class="hr"></td></tr>
-						<tr>
-							<td>Vlucht id</td>
-							<td><%= @flight.id %></td>
-						</tr>
-						<tr>
-							<td>Original fleet</td>
-							<td><%= @flight.original_aircraft.ba_code %></td>
-						</tr>
-						<tr>
-							<td>Assigned fleet</td>
-							<td><%= @flight.assigned_aircraft.ba_code if @flight.assigned_aircraft %></td>
-						</tr>
-						<tr>
-							<td>Haul</td>
-							<td><%= @flight.haul %></td>
-						</tr>
-						<tr><td colspan="2" class="hr"></td></tr>
-						<tr>
-							<td>flight nr 1</td>
-							<td><%= @flight.flight_nr_1 %></td>
-						</tr>
-						<tr>
-							<td>D(0) leg 1</td>
-							<td><%= @flight.pax_1 %></td>
-						</tr>
-						<tr>
-							<td>D(28) leg 1</td>
-							<td><%= @flight.pax_1_28d %></td>
-						</tr>
-						<tr><td colspan="2" class="hr"></td></tr>
-						<tr>
-							<td>flight nr 2</td>
-							<td><%= @flight.flight_nr_2 %></td>
-						</tr>
-						<tr>
-							<td>D(0) leg 2</td>
-							<td><%= @flight.pax_2 %></td>
-						</tr>
-						<tr>
-							<td>D(28) leg 2</td>
-							<td><%= @flight.pax_2_28d %></td>
-						</tr> 
-					</table>										
+					<div id="flight_info">
+						click on a flight for info
+					</div>
 
 					</div>
 				</div>

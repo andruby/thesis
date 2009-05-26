@@ -159,7 +159,7 @@ class Assignment
           width = ((f.arrival_time - f.departure_time) / (5*60).to_f).round
           tooltip = "flight #{f.id}: #{f.departure_time}, #{f.arrival_time}"
           style = "flight #{f.haul == "Medium" ? 'medium_haul' : ''}"
-          returning << "<div class='#{style}' title='#{tooltip}' style='width: #{width}px; margin-left: #{left}px; opacity: #{f.load_factor}'>#{f.spill == 0 ? '&nbsp;' : f.spill}</div>"
+          returning << "<div onclick='javascript:replace_flight_info(#{f.id})' class='#{style}' title='#{tooltip}' style='width: #{width}px; margin-left: #{left}px; opacity: #{f.load_factor}'>#{f.spill == 0 ? '&nbsp;' : f.spill}</div>"
           prev_arr_time = f.arrival_time
         end
         return returning
